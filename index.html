@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Fit in 2014</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+
+    </head>
+    <body>
+        
+        <p>Fit in 2014!</p>
+
+
+        <div id="2-mile-runs"></div>
+
+        <script src="js/vendor/jquery-1.10.2.min.js"></script>
+        <script src="js/vendor/highcharts.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/data.js"></script>
+        
+        <script>
+            $(document).ready(function(){
+                //when doc is ready, draw data into 2-mile-runs chart
+                $(function () {
+            $('#2-mile-runs').highcharts({
+                chart: {
+                    type: 'spline'
+                },
+                title: {
+                    text: '2 Mile Run Times'
+                },
+                xAxis: {
+                    type: 'datetime',
+                    dateTimeLabelFormats: {
+                        day: '%e. %b',
+                        week: '%e. %b',
+                        month: '%b \'%y',
+                        year: '%Y'
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: 'Time (Minutes)'
+                    }
+                },
+                tooltip: {
+                    formatter: function() {
+                            return '<b>'+ this.series.name +'</b><br/>'+
+                            Highcharts.dateFormat('%e. %b %Y', this.x) +': '+ this.y;
+                    }
+                },
+                
+                series: [{
+                    name: 'Alan Files',
+                    // Define the data points. All series have a dummy year
+                    // of 1970/71 in order to be compared on the same x axis. Note
+                    // that in JavaScript, months start at 0 for January, 1 for February etc.
+                    data: [
+                        [Date.UTC(2013,  9, 15), 15.066666 ],
+                        [Date.UTC(2013, 10, 01), 15.016666 ],
+                        [Date.UTC(2013, 11, 12), 14.65 ],
+                        [Date.UTC(2013, 11, 19), 15.383333 ]
+                    ]
+                }
+                //uncomment out this section, and add in a new person and times.
+                // ,{
+                //     name: 'John Doe',
+                //     // Define the data points. All series have a dummy year
+                //     // of 1970/71 in order to be compared on the same x axis. Note
+                //     // that in JavaScript, months start at 0 for January, 1 for February etc.
+                //     data: [
+                //         [Date.UTC(2013,  9, 15), 15.066666 ],
+                //         [Date.UTC(2013, 10, 01), 15.016666 ],
+                //         [Date.UTC(2013, 11, 12), 14.65 ],
+                //         [Date.UTC(2013, 11, 19), 15.383333 ]
+                //     ]
+                // }
+                ]
+            });
+        });
+    
+
+            });
+        </script>
+
+    </body>
+</html>
