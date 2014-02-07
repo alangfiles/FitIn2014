@@ -18,16 +18,33 @@
 
         <div id="2-mile-runs"></div>
 
+        <div id="weights"></div>
+
         <script src="js/vendor/jquery-1.10.2.min.js"></script>
         <script src="js/vendor/highcharts.js"></script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
         <script src="js/data.js"></script>
+        <script src="js/alanData.js"></script>
         
         <script>
             $(document).ready(function(){
                 //when doc is ready, draw data into 2-mile-runs chart
-                $(function () {
+
+
+                var alansRunData = [];
+                for(var i = 0, run; run = alanData.runs[i]; i++)
+                {
+                    alansRunData.push([run.date, run.timeMathed]);
+                }
+
+                var alanWeightData = [];
+                for(var i = 0, weight; weight = alanData.weights[i]; i++)
+                {
+                    alanWeightData.push([Date.parse(weight.date), weight.pounds]);
+                }
+
+            
             $('#2-mile-runs').highcharts({
                 chart: {
                     type: 'spline'
@@ -58,36 +75,48 @@
                 
                 series: [{
                     name: 'Alan Files',
-                    // Define the data points. All series have a dummy year
-                    // of 1970/71 in order to be compared on the same x axis. Note
-                    // that in JavaScript, months start at 0 for January, 1 for February etc.
-                    data: [
-                        [Date.UTC(2013,  9, 15), 15.066666 ],
-                        [Date.UTC(2013, 10, 01), 15.016666 ],
-                        [Date.UTC(2013, 11, 12), 14.65 ],
-                        [Date.UTC(2013, 11, 19), 15.383333 ],
-                        [Date.UTC(2014, 0, 4), 15 + 23/60 ],
-                        [Date.UTC(2014, 0, 10), 14 + 20/60 ],
-                        [Date.UTC(2014, 0, 15), 14 + 53/60 ]
-                    ]
+                    data: alansRunData
                 }
-                //uncomment out this section, and add in a new person and times.
-                // ,{
-                //     name: 'John Doe',
-                //     // Define the data points. All series have a dummy year
-                //     // of 1970/71 in order to be compared on the same x axis. Note
-                //     // that in JavaScript, months start at 0 for January, 1 for February etc.
-                //     data: [
-                //         [Date.UTC(2013,  9, 15), 15.066666 ],
-                //         [Date.UTC(2013, 10, 01), 15.016666 ],
-                //         [Date.UTC(2013, 11, 12), 14.65 ],
-                //         [Date.UTC(2013, 11, 19), 15.383333 ]
-                //     ]
-                // }
+                
                 ]
             });
-        });
     
+            $('#weights').highcharts({
+                chart: {
+                    type: 'spline'
+                },
+                title: {
+                    text: 'Weights'
+                },
+                xAxis: {
+                    type: 'datetime',
+                    dateTimeLabelFormats: {
+                        day: '%e. %b',
+                        week: '%e. %b',
+                        month: '%b \'%y',
+                        year: '%Y'
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: 'Weight (lbs)'
+                    }
+                },
+                tooltip: {
+                    formatter: function() {
+                            return '<b>'+ this.series.name +'</b><br/>'+
+                            Highcharts.dateFormat('%e. %b %Y', this.x) +': '+ this.y;
+                    }
+                },
+                
+                series: [{
+                    name: 'Alan Files',
+                    data: alanWeightData
+                }
+                
+                ]
+            });
+
 
             });
         </script>
