@@ -16,9 +16,9 @@
         <p>Fit in 2014!</p>
 
 
-        <div id="2-mile-runs"></div>
+        <!--<div id="2-mile-runs"></div>
 
-        <div id="weights"></div>
+        <div id="weights"></div>-->
         
         <div id="weights-and-runs"></div>
 
@@ -135,16 +135,36 @@
                     }
                 },
                 yAxis: [
+                    
                     {
+                        labels: {
+                            formatter: function() {
+                                return this.value +' Minutes';
+                            },
+                            style: {
+                                color: '#4572A7'
+                            }
+                        },
                         title: {
                             text: 'Run Times (minutes)'
                         }
                     },
                     {
-                        title: {
-                            text: 'Weights'
+                        labels: {
+                            formatter: function() {
+                                return this.value +' lbs';
+                            },
+                            style: {
+                                color: '#89A54E'
+                            }
                         },
-                        opposite:true
+                        title: {
+                            text: 'Weights',
+                            style: {
+                                color: '#89A54E'
+                            }
+                        },
+                        opposite: true
                     },
                 ],
                 tooltip: {
@@ -156,7 +176,7 @@
                 
                 series: [
                     {
-                        name: 'Alan Files',
+                        name: 'Run Times',
                         data: alansRunData
                     },
                     {
