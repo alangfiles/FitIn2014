@@ -147,7 +147,8 @@
                         },
                         title: {
                             text: 'Run Times (minutes)'
-                        }
+                        },
+                        opposite: true
                     },
                     {
                         labels: {
@@ -163,8 +164,8 @@
                             style: {
                                 color: '#89A54E'
                             }
-                        },
-                        opposite: true
+                        }
+                        
                     },
                 ],
                 tooltip: {
@@ -177,10 +178,12 @@
                 series: [
                     {
                         name: 'Run Times',
+                        yAxis: 1,
                         data: alansRunData
                     },
                     {
                         name: 'Weight',
+                        yAxis: 2,
                         data: alanWeightData
                     }
                 ]
