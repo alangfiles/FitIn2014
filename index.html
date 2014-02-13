@@ -19,6 +19,8 @@
         <div id="2-mile-runs"></div>
 
         <div id="weights"></div>
+        
+        <div id="weights-and-runs"></div>
 
         <script src="js/vendor/jquery-1.10.2.min.js"></script>
         <script src="js/vendor/highcharts.js"></script>
@@ -114,6 +116,54 @@
                     data: alanWeightData
                 }
                 
+                ]
+            });
+
+            $('#weights-and-runs').highcharts({
+                chart: {
+                    type: 'spline'
+                },
+                title: {
+                    text: 'Weights and Runs'
+                },
+                xAxis: {
+                    type: 'datetime',
+                    dateTimeLabelFormats: {
+                        day: '%e. %b',
+                        week: '%e. %b',
+                        month: '%b \'%y',
+                        year: '%Y'
+                    }
+                },
+                yAxis: [
+                    {
+                        title: {
+                            text: 'Run Times (minutes)'
+                        }
+                    },
+                    {
+                        title: {
+                            text: 'Weights'
+                        },
+                        opposite:true
+                    },
+                ],
+                tooltip: {
+                    formatter: function() {
+                            return '<b>'+ this.series.name +'</b><br/>'+
+                            Highcharts.dateFormat('%e. %b %Y', this.x) +': '+ this.y;
+                    }
+                },
+                
+                series: [
+                    {
+                        name: 'Alan Files',
+                        data: alansRunData
+                    },
+                    {
+                        name: 'Weight',
+                        data: alanWeightData
+                    }
                 ]
             });
 
