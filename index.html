@@ -15,10 +15,6 @@
         
         <p>Fit in 2014!</p>
 
-
-        <div id="2-mile-runs"></div>
-
-        <div id="weights"></div>
         
         <div id="weights-and-runs"></div>
 
@@ -44,79 +40,6 @@
                 {
                     alanWeightData.push([Date.parse(weight.date), weight.pounds]);
                 }
-
-            
-            $('#2-mile-runs').highcharts({
-                chart: {
-                    type: 'spline'
-                },
-                title: {
-                    text: '2 Mile Run Times'
-                },
-                xAxis: {
-                    type: 'datetime',
-                    dateTimeLabelFormats: {
-                        day: '%e. %b',
-                        week: '%e. %b',
-                        month: '%b \'%y',
-                        year: '%Y'
-                    }
-                },
-                yAxis: {
-                    title: {
-                        text: 'Time (Minutes)'
-                    }
-                },
-                tooltip: {
-                    formatter: function() {
-                            return '<b>'+ this.series.name +'</b><br/>'+
-                            Highcharts.dateFormat('%e. %b %Y', this.x) +': '+ this.y;
-                    }
-                },
-                
-                series: [{
-                    name: 'Alan Files',
-                    data: alansRunData
-                }
-                
-                ]
-            });
-    
-            $('#weights').highcharts({
-                chart: {
-                    type: 'spline'
-                },
-                title: {
-                    text: 'Weights'
-                },
-                xAxis: {
-                    type: 'datetime',
-                    dateTimeLabelFormats: {
-                        day: '%e. %b',
-                        week: '%e. %b',
-                        month: '%b \'%y',
-                        year: '%Y'
-                    }
-                },
-                yAxis: {
-                    title: {
-                        text: 'Weight (lbs)'
-                    }
-                },
-                tooltip: {
-                    formatter: function() {
-                            return '<b>'+ this.series.name +'</b><br/>'+
-                            Highcharts.dateFormat('%e. %b %Y', this.x) +': '+ this.y;
-                    }
-                },
-                
-                series: [{
-                    name: 'Alan Files',
-                    data: alanWeightData
-                }
-                
-                ]
-            });
 
             $('#weights-and-runs').highcharts({
                 chart: {
@@ -178,12 +101,12 @@
                 series: [
                     {
                         name: 'Run Times',
-                        yAxis: 1,
+                        yAxis: 0,
                         data: alansRunData
                     },
                     {
                         name: 'Weight',
-                        yAxis: 2,
+                        yAxis: 1,
                         data: alanWeightData
                     }
                 ]
