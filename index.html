@@ -15,16 +15,13 @@
         
         <p>Fit in 2014!</p>
 
-
-        <div id="2-mile-runs"></div>
-
-        <div id="weights"></div>
+        
+        <div id="weights-and-runs"></div>
 
         <script src="js/vendor/jquery-1.10.2.min.js"></script>
         <script src="js/vendor/highcharts.js"></script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
-        <script src="js/data.js"></script>
         <script src="js/alanData.js"></script>
         
         <script>
@@ -44,13 +41,12 @@
                     alanWeightData.push([Date.parse(weight.date), weight.pounds]);
                 }
 
-            
-            $('#2-mile-runs').highcharts({
+            $('#weights-and-runs').highcharts({
                 chart: {
                     type: 'spline'
                 },
                 title: {
-                    text: '2 Mile Run Times'
+                    text: 'Weights and Runs'
                 },
                 xAxis: {
                     type: 'datetime',
@@ -61,11 +57,40 @@
                         year: '%Y'
                     }
                 },
-                yAxis: {
-                    title: {
-                        text: 'Time (Minutes)'
-                    }
-                },
+                yAxis: [
+                    
+                    {
+                        labels: {
+                            formatter: function() {
+                                return this.value +' Minutes';
+                            },
+                            style: {
+                                color: '#AA4643'
+                            }
+                        },
+                        title: {
+                            text: 'Run Times (minutes)'
+                        },
+                        opposite: true
+                    },
+                    {
+                        labels: {
+                            formatter: function() {
+                                return this.value +' lbs';
+                            },
+                            style: {
+                                color: '#4572A7'
+                            }
+                        },
+                        title: {
+                            text: 'Weights',
+                            style: {
+                                color: '#4572A7'
+                            }
+                        }
+                        
+                    },
+                ],
                 tooltip: {
                     formatter: function() {
                             return '<b>'+ this.series.name +'</b><br/>'+
@@ -73,47 +98,19 @@
                     }
                 },
                 
-                series: [{
-                    name: 'Alan Files',
-                    data: alansRunData
-                }
-                
-                ]
-            });
-    
-            $('#weights').highcharts({
-                chart: {
-                    type: 'spline'
-                },
-                title: {
-                    text: 'Weights'
-                },
-                xAxis: {
-                    type: 'datetime',
-                    dateTimeLabelFormats: {
-                        day: '%e. %b',
-                        week: '%e. %b',
-                        month: '%b \'%y',
-                        year: '%Y'
+                series: [
+                    {
+                        name: 'Run Times',
+                        yAxis: 0,
+                        color: '#AA4643',
+                        data: alansRunData
+                    },
+                    {
+                        name: 'Weight',
+                        yAxis: 1,
+                        color: '#4572A7',
+                        data: alanWeightData
                     }
-                },
-                yAxis: {
-                    title: {
-                        text: 'Weight (lbs)'
-                    }
-                },
-                tooltip: {
-                    formatter: function() {
-                            return '<b>'+ this.series.name +'</b><br/>'+
-                            Highcharts.dateFormat('%e. %b %Y', this.x) +': '+ this.y;
-                    }
-                },
-                
-                series: [{
-                    name: 'Alan Files',
-                    data: alanWeightData
-                }
-                
                 ]
             });
 

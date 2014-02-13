@@ -1,6 +1,6 @@
 var alanData = {
 	"runs": [
-		{
+		/**{
 			"timeFormatted": "15:04",
 			"timeMathed": 15+04/60,
 			"date": Date.UTC(2013, 9, 15, 17, 49)
@@ -19,7 +19,7 @@ var alanData = {
 			"timeFormatted": "15:23",
 			"timeMathed": 15+23/60,
 			"date": Date.UTC(2013, 11, 19, 17, 19)
-		},
+		},*/
 		{
 			"timeFormatted": "15:38",
 			"timeMathed": 15+38/60,
@@ -66,7 +66,7 @@ var alanData = {
 		// }
 	],
 	"weights": [
-	    {"pounds": 178.2, "Time": "", "date": "1/28/2013"},
+	    /**{"pounds": 178.2, "Time": "", "date": "1/28/2013"},
 	    {"pounds": 171.4, "Time": "", "date": "2/2/2013"},
 	    {"pounds": 171.0, "Time": "", "date": "2/10/2013"},
 	    {"pounds": 170.4, "Time": "", "date": "2/17/2013"},
@@ -112,7 +112,7 @@ var alanData = {
 	    {"pounds": 172.0, "Time": "7:21 PM", "date": "10/15/2013"},
 	    {"pounds": 174.2, "Time": "8:52 AM", "date": "10/25/2013"},
 	    {"pounds": 176.8, "Time": "10:00 PM", "date": "10/27/2013"},
-	    {"pounds": 175.6, "Time": "10:43 PM", "date": "11/11/2013"},
+	    {"pounds": 175.6, "Time": "10:43 PM", "date": "11/11/2013"},**/
 	    {"pounds": 179.4, "Time": "1:39 PM", "date": "1/1/2014"},
 	    {"pounds": 176.4, "Time": "10:14 AM", "date": "1/4/2014"},
 	    {"pounds": 176.0, "Time": "8:50 AM", "date": "1/8/2014"},	
@@ -121,8 +121,8 @@ var alanData = {
 	    {"pounds": 175.0, "Time": "8:19 AM", "date": "1/24/2014"},	
 	    {"pounds": 177.6, "Time": "08:53 AM", "date": "1/30/2014"},
 	    {"pounds": 177.4, "Time": "5:48 PM", "date": "2/4/2014"},	
-	    {"pounds": 176.0, "Time": "8:00 AM", "date": "2/13/2014"},
-	    {"pounds": 177.0, "Time": "8:00 AM", "date": "2/14/2014"},
+	    {"pounds": 176.0, "Time": "8:00 AM", "date": "2/12/2014"},
+	    {"pounds": 177.0, "Time": "8:00 AM", "date": "2/13/2014"},
 	    // {"pounds": , "Time": "", "date": ""}
   ]
 }
