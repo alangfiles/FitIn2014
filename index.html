@@ -123,9 +123,9 @@
             
             var idealRate = 200/52;
             var today = new Date();
-            var currentRate = today.getWeek() / getMilesRun();
-            $("#miles-rate").html("Current Rate: " + currentRate + "<br/>"
-                                + "Ideal Rate: " + idealRate );        
+            var currentRate = getMilesRun() / today.getWeek();
+            $("#miles-rate").html("Current Rate: " + currentRate + " Miles Per Week<br/>"
+                                + "Ideal Rate: " + idealRate + " Miles Per Week");        
 
 
             });
