@@ -120,7 +120,12 @@
 
             $("#miles-run").html(getMilesRun() + " Miles Run so far");        
             
-
+            
+            var idealRate = 200/52;
+            var today = new Date();
+            var currentRate = today.getWeek() / getMilesRun();
+            $("#miles-rate").html("Current Rate: " + currentRate + "<br/>
+                                + "Ideal Rate: " + idealRate() );        
 
 
             });
@@ -128,6 +133,13 @@
             function getMilesRun(){
                 return alanData.runs.length * 2;
             }
+            
+            Date.prototype.getWeek = function() {
+                var onejan = new Date(this.getFullYear(),0,1);
+                return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
+            }
+            
+            
             
         </script>
 
