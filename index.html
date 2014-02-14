@@ -17,6 +17,10 @@
 
         
         <div id="weights-and-runs"></div>
+        
+        <div id="miles-run"></div>
+        
+        <div id="miles-rate"></div>
 
         <script src="js/vendor/jquery-1.10.2.min.js"></script>
         <script src="js/vendor/highcharts.js"></script>
@@ -114,8 +118,17 @@
                 ]
             });
 
+            $("#miles-run").innerHtml(getMilesRun() + " Miles Run so far");        
+            
+
+
 
             });
+            
+            function getMilesRun(){
+                return alanData.runs.length() * 2;
+            }
+            
         </script>
 
     </body>
