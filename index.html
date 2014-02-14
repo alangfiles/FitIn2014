@@ -118,11 +118,13 @@
                 ]
             });
 
-            $("#miles-run").html(getMilesRun() + " Miles Run so far");        
+            var today = new Date();
+            $("#miles-run").html("Current Miles: " + getMilesRun() + " Miles Run<br/>"
+                                +"Ideal Miles: " + 200/today.getWeek() + " Miles Run");        
             
             
             var idealRate = 200/52;
-            var today = new Date();
+            
             var currentRate = getMilesRun() / today.getWeek();
             $("#miles-rate").html("Current Rate: " + currentRate.toFixed(3) + " Miles Per Week<br/>"
                                 + "Ideal Rate: " + idealRate.toFixed(3) + " Miles Per Week");        
