@@ -120,7 +120,7 @@
 
             var today = new Date();
             $("#miles-run").html("Current Miles: " + getMilesRun() + " Miles Run<br/>"
-                                +"Ideal Miles: " + 200/today.getWeek() + " Miles Run");        
+                                +"Ideal Miles: " + (200/today.getWeek()).toFixed(3) + " Miles Run");        
             
             
             var idealRate = 200/52;
