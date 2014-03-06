@@ -85,6 +85,11 @@ var alanData = {
 			"date": Date.UTC(2014, 1, 26, 17, 07),
 			"note": "with Ryan McMullen, 4 miler"
 		},
+		{
+			"timeFormatted": "13:38",
+			"timeMathed": 13+38/60,
+			"date": Date.UTC(2014, 2, 6, 17, 00)
+		},
 		// {
 		// 	"timeFormatted": "15:40",
 		// 	"timeMathed": 15+40/60,
