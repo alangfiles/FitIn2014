@@ -206,6 +206,8 @@ var alanData = {
 	    {"pounds": 177.7, "Time": "5:30 PM", "date": "3/18/2014"},
 	    {"pounds": 180.0, "Time": "5:30 PM", "date": "3/19/2014"},
 	    {"pounds": 179.6, "Time": "8:30 AM", "date": "3/21/2014"},
+	    {"pounds": 179.4, "Time": "8:30 AM", "date": "3/23/2014"},
+	    {"pounds": 178.8, "Time": "8:30 AM", "date": "3/24/2014"},
 	    // {"pounds": , "Time": "", "date": ""}
   ]
 }
