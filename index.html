@@ -21,6 +21,10 @@
         <div id="miles-run"></div>
         
         <div id="miles-rate"></div>
+        
+        <div id="avgRunTime"></div>
+        
+        <div id="avgWeight"></div>
 
         <script src="js/vendor/jquery-1.10.2.min.js"></script>
         <script src="js/vendor/highcharts.js"></script>
@@ -147,6 +151,8 @@
             $("#miles-rate").html("Current Rate: " + currentRate.toFixed(3) + " Miles Per Week<br/>"
                                 + "Ideal Rate: " + idealRate.toFixed(3) + " Miles Per Week");        
 
+            $("#avgWeight").html(avgWeight);
+            $("#avgRunTime").html(avgRunTime);
 
             });
             
