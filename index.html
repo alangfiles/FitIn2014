@@ -105,10 +105,7 @@
                     formatter: function() {
                         if(this.series.name == 'Run Times (2 miles)'){
                             return '<b>'+ this.series.name +'</b><br/>'+
-                            Highcharts.dateFormat('%e. %b %Y', this.x) +': '+ this.y.toFixed(0) 
-                            + ":" + (((this.y%1)*60).toFixed(0) < 10 
-                                        ? "0"+((this.y%1)*60).toFixed(0) //add leading zero for seconds.
-                                        : ((this.y%1)*60).toFixed(0)); 
+                            Highcharts.dateFormat('%e. %b %Y', this.x) +': '+ formatMathTimeToMinuteSecond(this.y); 
                         }
                         else{
                             return '<b>'+ this.series.name +'</b><br/>'+
@@ -191,9 +188,17 @@
                                 + "Ideal Rate: " + idealRate.toFixed(3) + " Miles Per Week");        
 
             $("#avgWeight").html("Average Weight: " + avgWeight);
-            $("#avgRunTime").html("Average Run Time: " + avgRunTime);
+            $("#avgRunTime").html("Average Run Time: " + formatMathTimeToMinuteSecond(avgRunTime));
 
             });
+
+            function formatMathTimeToMinuteSecond(runTime)
+            {
+                return runtTime.toFixed(0) + ":" +  //minutes rounded
+                        (((runTime%1)*60).toFixed(0) < 10  //seconds rounded.
+                           ? "0"+((runTime%1)*60).toFixed(0) //add leading zero for seconds less than 10
+                           : ((runTime%1)*60).toFixed(0));                 
+            }
             
             function getMilesRun(){
                 return alanData.runs.length * 2;
