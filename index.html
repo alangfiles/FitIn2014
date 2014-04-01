@@ -71,7 +71,7 @@
                     {
                         labels: {
                             formatter: function() {
-                                return this.value.toFixed(0) + (this.value%1)*60 +' Minutes';
+                                return this.value +' Minutes';
                             },
                             style: {
                                 color: '#AA4643'
@@ -99,11 +99,19 @@
                         }
                         
                     },
-                ],
+                ], //
                 tooltip: {
+                    shared: false,
                     formatter: function() {
+                        if(this.series.name == 'Run Times (2 miles)'){
+                            return '<b>'+ this.series.name +'</b><br/>'+
+                            Highcharts.dateFormat('%e. %b %Y', this.x) +': '+ this.y.toFixed(0) + (this.y%1)*60;
+                        }
+                        else{
                             return '<b>'+ this.series.name +'</b><br/>'+
                             Highcharts.dateFormat('%e. %b %Y', this.x) +': '+ this.y;
+                        }
+                            
                     }
                 },
                 
