@@ -60,8 +60,8 @@
                 xAxis: {
                     type: 'datetime',
                     dateTimeLabelFormats: {
-                        day: '%e. %b',
-                        week: '%e. %b',
+                        day: '%e %b',
+                        week: '%e %b',
                         month: '%b \'%y',
                         year: '%Y'
                     }
@@ -105,11 +105,11 @@
                     formatter: function() {
                         if(this.series.name == 'Run Times (2 miles)'){
                             return '<b>'+ this.series.name +'</b><br/>'+
-                            Highcharts.dateFormat('%e. %b %Y', this.x) +': '+ formatMathTimeToMinuteSecond(this.y) + " minutes"; 
+                            Highcharts.dateFormat('%e %b %Y', this.x) +': '+ formatMathTimeToMinuteSecond(this.y) + " minutes"; 
                         }
                         else{
                             return '<b>'+ this.series.name +'</b><br/>'+
-                            Highcharts.dateFormat('%e. %b %Y', this.x) +': '+ this.y + " lbs";
+                            Highcharts.dateFormat('%e %b %Y', this.x) +': '+ this.y + " lbs";
                         }
                             
                     }
