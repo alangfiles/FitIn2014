@@ -37,14 +37,11 @@
         <script>
             $(document).ready(function(){
                 //when doc is ready, draw data into 2-mile-runs chart
-                Array.min = function( array ){
-                    return Math.min.apply( Math, array );
-                };
 
                 var alansRunData = [];
                 for(var i = 0, run; run = alanData.runs[i]; i++)
                 {
-                    alansRunData.push([run.date, run.timeMathed]);
+                    alansRunData.push([run.date, run.timeMathed, run.note]);
                 }
 
                 var alanWeightData = [];
