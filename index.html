@@ -191,8 +191,8 @@
                                 + "Ideal Rate: " + idealRate.toFixed(3) + " Miles Per Week");        
 
             $("#avgWeight").html("Average Weight: " + avgWeight.toFixed(2) + " lbs");
-            $("#avgRunTime").html("Average Run Time: " + formatMathTimeToMinuteSecond(avgRunTime) + " minutes");
-            $("#bestRunTime").html("Best Run Time: " + formatMathTimeToMinuteSecond(_.sortBy(alanData.runs, function(run){return run.timeMathed;})[0].timeMathed) + " minutes")
+            $("#avgRunTime").html("Average 2 Mile Run Time: " + formatMathTimeToMinuteSecond(avgRunTime) + " minutes");
+            $("#bestRunTime").html("Best 2 Mile Run Time: " + formatMathTimeToMinuteSecond(_.sortBy(alanData.runs, function(run){return run.timeMathed;})[0].timeMathed) + " minutes")
 
             });
 
