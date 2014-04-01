@@ -194,7 +194,7 @@
 
             function formatMathTimeToMinuteSecond(runTime)
             {
-                return runtTime.toFixed(0) + ":" +  //minutes rounded
+                return runTime.toFixed(0) + ":" +  //minutes rounded
                         (((runTime%1)*60).toFixed(0) < 10  //seconds rounded.
                            ? "0"+((runTime%1)*60).toFixed(0) //add leading zero for seconds less than 10
                            : ((runTime%1)*60).toFixed(0));                 
