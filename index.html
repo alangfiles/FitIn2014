@@ -105,7 +105,7 @@
                     formatter: function() {
                         if(this.series.name == 'Run Times (2 miles)'){
                             return '<b>'+ this.series.name +'</b><br/>'+
-                            Highcharts.dateFormat('%e. %b %Y', this.x) +': '+ formatMathTimeToMinuteSecond(this.y) + " minutes"; 
+                            Highcharts.dateFormat('%e. %b %Y', this.x) +': '+ formatMathTimeToMinuteSecond(this.y) + " minutes" + this.z; 
                         }
                         else{
                             return '<b>'+ this.series.name +'</b><br/>'+
