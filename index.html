@@ -71,7 +71,7 @@
                     {
                         labels: {
                             formatter: function() {
-                                return this.value +' Minutes';
+                                return this.value.toFixed(0) + (this.value%1)*60 +' Minutes';
                             },
                             style: {
                                 color: '#AA4643'
@@ -109,7 +109,7 @@
                 
                 series: [
                     {
-                        name: 'Run Times',
+                        name: 'Run Times (2 miles)',
                         yAxis: 0,
                         color: '#AA4643',
                         data: alansRunData
@@ -119,6 +119,34 @@
                         yAxis: 1,
                         color: '#4572A7',
                         data: alanWeightData
+                    }
+                    {
+                        type: 'line',
+                        name: 'Run Regression Line',
+                        data: runRegressionData,
+                        marker: {
+                            enabled: false
+                        },
+                        states: {
+                            hover: {
+                                lineWidth: 0
+                            }
+                        },
+                        enableMouseTracking: false
+                    },
+                    {
+                        type: 'line',
+                        name: 'Weight Regression Line',
+                        data: weightRegressionData,
+                        marker: {
+                            enabled: false
+                        },
+                        states: {
+                            hover: {
+                                lineWidth: 0
+                            }
+                        },
+                        enableMouseTracking: false
                     }
                 ]
             });
@@ -151,7 +179,7 @@
             $("#miles-rate").html("Current Rate: " + currentRate.toFixed(3) + " Miles Per Week<br/>"
                                 + "Ideal Rate: " + idealRate.toFixed(3) + " Miles Per Week");        
 
-            $("#avgWeight").html("Avergae Weight: " + avgWeight);
+            $("#avgWeight").html("Average Weight: " + avgWeight);
             $("#avgRunTime").html("Average Run Time: " + avgRunTime);
 
             });
