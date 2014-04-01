@@ -25,6 +25,7 @@
         <div id="avgRunTime"></div>
         
         <div id="avgWeight"></div>
+        <div id="bestRunTime"></div>
 
         <script src="js/vendor/jquery-1.10.2.min.js"></script>
         <script src="js/vendor/highcharts.js"></script>
@@ -36,7 +37,9 @@
         <script>
             $(document).ready(function(){
                 //when doc is ready, draw data into 2-mile-runs chart
-
+                Array.min = function( array ){
+                    return Math.min.apply( Math, array );
+                };
 
                 var alansRunData = [];
                 for(var i = 0, run; run = alanData.runs[i]; i++)
@@ -187,8 +190,9 @@
             $("#miles-rate").html("Current Rate: " + currentRate.toFixed(3) + " Miles Per Week<br/>"
                                 + "Ideal Rate: " + idealRate.toFixed(3) + " Miles Per Week");        
 
-            $("#avgWeight").html("Average Weight: " + avgWeight);
+            $("#avgWeight").html("Average Weight: " + avgWeight.toFixed(2));
             $("#avgRunTime").html("Average Run Time: " + formatMathTimeToMinuteSecond(avgRunTime));
+            $("#bestRunTime").html("Best Run Time: " + formatMathTimeToMinuteSecond(_.sortBy(alanData.runs, function(run){return run.timeMathed;})[0].timMathed))
 
             });
 
