@@ -128,8 +128,8 @@ var alanData = {
 			"date": Date.UTC(2014, 2, 31, 15, 45)
 		},
 		{
-			"timeFormatted": "14:07",
-			"timeMathed": 14+07/60,
+			"timeFormatted": "14:11",
+			"timeMathed": 14+11/60,
 			"date": Date.UTC(2014, 3, 2, 18, 00)
 		},
 		// {
