@@ -66,20 +66,20 @@
             $(document).ready(function(){
                 //when doc is ready, draw data into 2-mile-runs chart
 
-                var alansRunData = [];
+                alansRunData = [];
                 for(var i = 0, run; run = alanData.runs[i]; i++)
                 {
                     alansRunData.push([run.date, run.timeMathed, run.note]);
                 }
 
-                var alanWeightData = [];
+                alanWeightData = [];
                 for(var i = 0, weight; weight = alanData.weights[i]; i++)
                 {
                     alanWeightData.push([Date.parse(weight.date), weight.pounds]);
                 }
 
-            $("#miles-run").html("Current Miles: " + getMilesRun() + " Miles Run<br/>"
-                                +"Ideal Miles: " + getIdealMiles() + " Miles Run");        
+                $("#miles-run").html("Current Miles: " + getMilesRun() + " Miles Run<br/>"
+                                    +"Ideal Miles: " + getIdealMiles() + " Miles Run");        
             
 
             var avgWeight = 0;
