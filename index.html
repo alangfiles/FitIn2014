@@ -9,7 +9,11 @@
         
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
-
+        <style>
+        #run-goal{
+            width:300px;
+        }
+        </style>
     </head>
     <body>
         
@@ -36,6 +40,29 @@
         <script src="http://underscorejs.org/underscore-min.js"></script>
         
         <script>
+            function formatMathTimeToMinuteSecond(runTime)
+            {
+                return Math.floor(runTime) + ":" +  //minutes rounded
+                        (((runTime%1)*60).toFixed(0) < 10  //seconds rounded.
+                           ? "0"+((runTime%1)*60).toFixed(0) //add leading zero for seconds less than 10
+                           : ((runTime%1)*60).toFixed(0));                 
+            }
+            
+            function getIdealMiles(){
+                var idealRate = 200/52;
+                var today = new Date();
+                return (idealRate*today.getWeek()).toFixed(3);
+            }
+            
+            function getMilesRun(){
+                return alanData.runs.length * 2;
+            }
+            
+            Date.prototype.getWeek = function() {
+                var onejan = new Date(this.getFullYear(),0,1);
+                return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
+            }
+
             $(document).ready(function(){
                 //when doc is ready, draw data into 2-mile-runs chart
 
@@ -51,7 +78,103 @@
                     alanWeightData.push([Date.parse(weight.date), weight.pounds]);
                 }
 
-            $('#weights-and-runs').highcharts({
+            $("#miles-run").html("Current Miles: " + getMilesRun() + " Miles Run<br/>"
+                                +"Ideal Miles: " + getIdealMiles() + " Miles Run");        
+            
+
+            var avgWeight = 0;
+            for(var i =0, lb; lb = alanData.weights[i]; i++)
+            {
+                avgWeight = avgWeight + lb.pounds;
+            }
+            avgWeight = avgWeight/alanData.weights.length;
+            
+            var avgRunTime = 0;
+            for(var i =0, run; run = alanData.runs[i]; i++)
+            {
+                avgRunTime = avgRunTime + run.timeMathed;
+            }
+            avgRunTime = avgRunTime/alanData.runs.length;
+            
+            
+            var idealRate = 200/52;
+            var today = new Date();
+            var currentRate = getMilesRun() / today.getWeek();
+            $("#miles-rate").html("Current Rate: " + currentRate.toFixed(3) + " Miles Per Week<br/>"
+                                + "Ideal Rate: " + idealRate.toFixed(3) + " Miles Per Week");        
+
+            $("#avgWeight").html("Average Weight: " + avgWeight.toFixed(2) + " lbs");
+            $("#avgRunTime").html("Average 2 Mile Run Time: " + formatMathTimeToMinuteSecond(avgRunTime) + " minutes");
+            $("#bestRunTime").html("Best 2 Mile Run Time: " + formatMathTimeToMinuteSecond(_.sortBy(alanData.runs, function(run){return run.timeMathed;})[0].timeMathed) + " minutes")
+
+
+            //draw both charts
+            
+        $('#run-goal').highcharts({
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: ''
+            },
+            xAxis: {
+                min:0,
+                max:0,
+                labels:{
+                    enabled:false
+                }
+            },
+            yAxis: [{
+                min: 0,
+                max: 200,
+                title: {
+                    text: 'Total Miles',
+                }
+            },
+            {
+                title: {
+                    text: '',
+                },
+                labels: {
+                    enabled:false,
+                },
+                min: 0,
+                max: 200
+             }
+                   ],
+            plotOptions: {
+                bar: {
+                    dataLabels: {
+                        enabled: true,
+                    },
+                },
+            },
+            tooltip:{
+                enabled:false
+            },
+            legend: {
+                enabled: true
+            },
+            credits: {
+                enabled: false
+            },
+            series: [ 
+              {
+                name: 'Current Miles Run',
+                data: [getMilesRun()],
+                type: 'bar'
+              },
+              {
+                name: 'Ideal Average Rate',
+                color: '#89A54E',
+                type: 'line',
+                yAxis: 1,
+                data: [[-1, getIdealMiles()],[1,getIdealMiles()]],
+              } 
+            ]
+        });
+
+        $('#weights-and-runs').highcharts({
                 chart: {
                     type: 'spline'
                 },
@@ -129,159 +252,8 @@
                         color: '#4572A7',
                         data: alanWeightData
                     },
-                    // {
-                    //     type: 'line',
-                    //     name: 'Run Regression Line',
-                    //     data: runRegressionData,
-                    //     marker: {
-                    //         enabled: false
-                    //     },
-                    //     states: {
-                    //         hover: {
-                    //             lineWidth: 0
-                    //         }
-                    //     },
-                    //     enableMouseTracking: false
-                    // },
-                    // {
-                    //     type: 'line',
-                    //     name: 'Weight Regression Line',
-                    //     data: weightRegressionData,
-                    //     marker: {
-                    //         enabled: false
-                    //     },
-                    //     states: {
-                    //         hover: {
-                    //             lineWidth: 0
-                    //         }
-                    //     },
-                    //     enableMouseTracking: false
-                    // }
                 ]
             });
-
-
-            
-
-            
-            $("#miles-run").html("Current Miles: " + getMilesRun() + " Miles Run<br/>"
-                                +"Ideal Miles: " + getIdealMiles() + " Miles Run");        
-            
-            
-            
-            var avgWeight = 0;
-            for(var i =0, lb; lb = alanData.weights[i]; i++)
-            {
-                avgWeight = avgWeight + lb.pounds;
-            }
-            avgWeight = avgWeight/alanData.weights.length;
-            
-            var avgRunTime = 0;
-            for(var i =0, run; run = alanData.runs[i]; i++)
-            {
-                avgRunTime = avgRunTime + run.timeMathed;
-            }
-            avgRunTime = avgRunTime/alanData.runs.length;
-            
-            
-            var idealRate = 200/52;
-            var today = new Date();
-            var currentRate = getMilesRun() / today.getWeek();
-            $("#miles-rate").html("Current Rate: " + currentRate.toFixed(3) + " Miles Per Week<br/>"
-                                + "Ideal Rate: " + idealRate.toFixed(3) + " Miles Per Week");        
-
-            $("#avgWeight").html("Average Weight: " + avgWeight.toFixed(2) + " lbs");
-            $("#avgRunTime").html("Average 2 Mile Run Time: " + formatMathTimeToMinuteSecond(avgRunTime) + " minutes");
-            $("#bestRunTime").html("Best 2 Mile Run Time: " + formatMathTimeToMinuteSecond(_.sortBy(alanData.runs, function(run){return run.timeMathed;})[0].timeMathed) + " minutes")
-
-            });
-
-            function formatMathTimeToMinuteSecond(runTime)
-            {
-                return Math.floor(runTime) + ":" +  //minutes rounded
-                        (((runTime%1)*60).toFixed(0) < 10  //seconds rounded.
-                           ? "0"+((runTime%1)*60).toFixed(0) //add leading zero for seconds less than 10
-                           : ((runTime%1)*60).toFixed(0));                 
-            }
-            
-            function getIdealMiles(){
-                var idealRate = 200/52;
-                var today = new Date();
-                return (idealRate*today.getWeek()).toFixed(3);
-            }
-            
-            function getMilesRun(){
-                return alanData.runs.length * 2;
-            }
-            
-            Date.prototype.getWeek = function() {
-                var onejan = new Date(this.getFullYear(),0,1);
-                return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
-            }
-            
-        $('#run-goal').highcharts({
-            chart: {
-                type: 'bar'
-            },
-            title: {
-                text: ''
-            },
-            xAxis: {
-                min:0,
-                max:0,
-                labels:{
-                    enabled:false
-                }
-            },
-            yAxis: [{
-                min: 0,
-                max: 200,
-                title: {
-                    text: 'Total Miles',
-                }
-            },
-            {
-                title: {
-                    text: '',
-                },
-                labels: {
-                    enabled:false,
-                },
-                min: 0,
-                max: 200
-             }
-                   ],
-            plotOptions: {
-                bar: {
-                    dataLabels: {
-                        enabled: true,
-                    },
-                },
-            },
-            tooltip:{
-                enabled:false
-            },
-            legend: {
-                enabled: true
-            },
-            credits: {
-                enabled: false
-            },
-            series: [ 
-              {
-                name: 'Current Miles Run',
-                data: [getMilesRun()],
-                type: 'bar'
-              },
-              {
-                name: 'Ideal Average Rate',
-                color: '#89A54E',
-                type: 'line',
-                yAxis: 1,
-                data: [[-1, getIdealMiles()],[1,getIdealMiles()]],
-              } 
-            ]
-        });
     });
 
             
