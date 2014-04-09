@@ -167,11 +167,7 @@
             $("#miles-run").html("Current Miles: " + getMilesRun() + " Miles Run<br/>"
                                 +"Ideal Miles: " + getIdealMiles() + " Miles Run");        
             
-            function getIdealMiles(){
-                var idealRate = 200/52;
-                var today = new Date();
-                return (idealRate*today.getWeek()).toFixed(3);
-            }
+            
             
             var avgWeight = 0;
             for(var i =0, lb; lb = alanData.weights[i]; i++)
@@ -206,6 +202,12 @@
                         (((runTime%1)*60).toFixed(0) < 10  //seconds rounded.
                            ? "0"+((runTime%1)*60).toFixed(0) //add leading zero for seconds less than 10
                            : ((runTime%1)*60).toFixed(0));                 
+            }
+            
+            function getIdealMiles(){
+                var idealRate = 200/52;
+                var today = new Date();
+                return (idealRate*today.getWeek()).toFixed(3);
             }
             
             function getMilesRun(){
