@@ -18,15 +18,16 @@
         
         <div id="weights-and-runs"></div>
         
-        <div id="miles-run"></div>
+        <div id="run-goal"></div>
         
-        <div id="miles-rate"></div>
+        <div id="text-stats">
+            <div id="miles-run"></div>
+            <div id="miles-rate"></div>
+            <div id="avgRunTime"></div>
+            <div id="avgWeight"></div>
+            <div id="bestRunTime"></div>
+        </div>
         
-        <div id="avgRunTime"></div>
-        
-        <div id="avgWeight"></div>
-        <div id="bestRunTime"></div>
-
         <script src="js/vendor/jquery-1.10.2.min.js"></script>
         <script src="js/vendor/highcharts.js"></script>
         <script src="js/plugins.js"></script>
@@ -160,12 +161,17 @@
             });
 
 
-            var idealRate = 200/52;
-
-            var today = new Date();
-            $("#miles-run").html("Current Miles: " + getMilesRun() + " Miles Run<br/>"
-                                +"Ideal Miles: " + (idealRate*today.getWeek()).toFixed(3) + " Miles Run");        
             
+
+            
+            $("#miles-run").html("Current Miles: " + getMilesRun() + " Miles Run<br/>"
+                                +"Ideal Miles: " + getIdealMiles() + " Miles Run";        
+            
+            function getIdealMiles(){
+                var idealRate = 200/52;
+                var today = new Date();
+                return idealRate*today.getWeek()).toFixed(3);
+            }
             
             var avgWeight = 0;
             for(var i =0, lb; lb = alanData.weights[i]; i++)
@@ -210,6 +216,73 @@
                 return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
             }
             
+            $(function () {
+        $('#run-goal').highcharts({
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: ''
+            },
+            xAxis: {
+                min:0,
+                max:0,
+                labels:{
+                    enabled:false
+                }
+            },
+            yAxis: [{
+                min: 0,
+                max: 200,
+                title: {
+                    text: 'Total Miles',
+                }
+            },
+            {
+                title: {
+                    text: '',
+                },
+                labels: {
+                    enabled:false,
+                },
+                min: 0,
+                max: 200
+             }
+                   ],
+            plotOptions: {
+                bar: {
+                    dataLabels: {
+                        enabled: true,
+                    },
+                },
+            },
+            tooltip:{
+                enabled:false
+            },
+            legend: {
+                enabled: true
+            },
+            credits: {
+                enabled: false
+            },
+            series: [ 
+              {
+                name: 'Current Miles Run',
+                data: [getMilesRun()],
+                type: 'bar'
+              },
+              {
+                name: 'Ideal Average Rate',
+                color: '#89A54E',
+                type: 'line',
+                yAxis: 1,
+                data: [[-1, getIdealMiles()],[1,getIdealMiles()]],
+              } 
+            ]
+        });
+    });
+    
+
             
             
         </script>
