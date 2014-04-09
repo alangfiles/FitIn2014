@@ -66,13 +66,13 @@
             $(document).ready(function(){
                 //when doc is ready, draw data into 2-mile-runs chart
 
-                alansRunData = [];
+                var alansRunData = [];
                 for(var i = 0, run; run = alanData.runs[i]; i++)
                 {
                     alansRunData.push([run.date, run.timeMathed, run.note]);
                 }
 
-                alanWeightData = [];
+                var alanWeightData = [];
                 for(var i = 0, weight; weight = alanData.weights[i]; i++)
                 {
                     alanWeightData.push([Date.parse(weight.date), weight.pounds]);
@@ -169,7 +169,7 @@
                 color: '#89A54E',
                 type: 'line',
                 yAxis: 1,
-                data: [[-1, getIdealMiles()],[1,getIdealMiles()]],
+                data: [[-1, 60],[1,60]],
               } 
             ]
         });
