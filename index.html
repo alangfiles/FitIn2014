@@ -220,6 +220,7 @@
             }
             
             $(function () {
+                idealMiles = getIdealMiles();
         $('#run-goal').highcharts({
             chart: {
                 type: 'bar'
@@ -279,7 +280,7 @@
                 color: '#89A54E',
                 type: 'line',
                 yAxis: 1,
-                data: [[-1, getIdealMiles()],[1,getIdealMiles()]],
+                data: [[-1, idealMiles],[1,idealMiles]],
               } 
             ]
         });
