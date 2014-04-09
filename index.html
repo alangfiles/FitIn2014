@@ -12,6 +12,10 @@
         <style>
         #run-goal{
             width:300px;
+            height:180px;
+        }
+        #weights-and-runs{
+            height:300px;
         }
         </style>
     </head>
@@ -99,6 +103,7 @@
             
             var idealRate = 200/52;
             var today = new Date();
+            var idealMiles = getIdealMiles();
             var currentRate = getMilesRun() / today.getWeek();
             $("#miles-rate").html("Current Rate: " + currentRate.toFixed(3) + " Miles Per Week<br/>"
                                 + "Ideal Rate: " + idealRate.toFixed(3) + " Miles Per Week");        
@@ -169,7 +174,7 @@
                 color: '#89A54E',
                 type: 'line',
                 yAxis: 1,
-                data: [[-1, 60],[1,60]],
+                data: [[-1, idealMiles],[1,idealMiles]],
               } 
             ]
         });
