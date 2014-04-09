@@ -188,7 +188,7 @@
             avgRunTime = avgRunTime/alanData.runs.length;
             
             
-            
+            var today = new Date();
             var currentRate = getMilesRun() / today.getWeek();
             $("#miles-rate").html("Current Rate: " + currentRate.toFixed(3) + " Miles Per Week<br/>"
                                 + "Ideal Rate: " + idealRate.toFixed(3) + " Miles Per Week");        
