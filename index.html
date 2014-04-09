@@ -167,7 +167,7 @@
             series: [ 
               {
                 name: 'Current Miles Run',
-                data: [milesRun],
+                data: [parseFloat(getMilesRun())],
                 type: 'bar'
               },
               {
@@ -175,7 +175,7 @@
                 color: '#89A54E',
                 type: 'line',
                 yAxis: 1,
-                data: [[-1, idealMiles],[1,idealMiles]],
+                data: [[-1, parseFloat(getIdealMiles())],[1,parseFloat(getIdealMiles())]],
               } 
             ]
         });
