@@ -104,6 +104,7 @@
             var idealRate = 200/52;
             var today = new Date();
             var idealMiles = getIdealMiles();
+            var milesRun = getMilesRun();
             var currentRate = getMilesRun() / today.getWeek();
             $("#miles-rate").html("Current Rate: " + currentRate.toFixed(3) + " Miles Per Week<br/>"
                                 + "Ideal Rate: " + idealRate.toFixed(3) + " Miles Per Week");        
@@ -166,7 +167,7 @@
             series: [ 
               {
                 name: 'Current Miles Run',
-                data: [getMilesRun()],
+                data: [milesRun],
                 type: 'bar'
               },
               {
