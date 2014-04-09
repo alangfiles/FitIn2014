@@ -17,16 +17,12 @@
         #weights-and-runs{
             height:400px;
         }
-        #weights-and-runs:after{
-            clear:both;
-        }
         #wrapper{
             width:800;
             text-align:center;
             margin: 0 auto;
         }
         .widget{
-            float:left;
             background-color: #EEE;
             border: 1px solid #CCC;
             border-radius: 5px;
@@ -34,6 +30,9 @@
             -moz-border-radius: 5px;
             padding:10px;
             margin:10px;
+        }
+        .float-widget{
+            float:left;
         }
         </style>
     </head>
@@ -43,9 +42,9 @@
             <h1>Fit in 2014!</h1>
             <div id="weights-and-runs" class="widget"></div>
             
-            <div id="run-goal" class="widget"></div>
+            <div id="run-goal" class="widget float-widget"></div>
             
-            <div id="text-stats" class="widget">
+            <div id="text-stats" class="widget float-widget">
                 <div id="miles-run"></div>
                 <div id="miles-rate"></div>
                 <div id="avgRunTime"></div>
