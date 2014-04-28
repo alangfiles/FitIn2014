@@ -165,6 +165,12 @@ var alanData = {
 			"date": Date.UTC(2014, 3, 22, 17, 00),
 			"note": "with noah, and run club."
 		},
+		{
+			"timeFormatted": "13:29",
+			"timeMathed": 13+29/60,
+			"date": Date.UTC(2014, 3, 28, 16, 30)
+			
+		},
 		// {
 		// 	"timeFormatted": "15:40",
 		// 	"timeMathed": 15+40/60,
