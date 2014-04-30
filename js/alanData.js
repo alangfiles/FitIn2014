@@ -172,7 +172,7 @@ var alanData = {
 			 
 		},
 		{
-			"timeFormatted": "15:08",
+			"timeFormatted": "15:06",
 			"timeMathed": 15+08/60,
 			"date": Date.UTC(2014, 3, 29, 16, 30),
 			"note": "with noah"
