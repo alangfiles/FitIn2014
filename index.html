@@ -54,6 +54,12 @@
                 <div id="bestRunTime"></div>
             </div>
             
+            <div id="run-stats" class="widget float-widget">
+                <div id="longestTimeBetweenRuns"></div>
+                <div id="averageTimeBetweenRuns"></div>
+            </div>
+            
+            
         </div>
         
         <script src="js/vendor/jquery-1.10.2.min.js"></script>
@@ -86,6 +92,19 @@
                 var onejan = new Date(this.getFullYear(),0,1);
                 return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
             }
+            
+            var timeGaps = [];
+            var runDataLength = alanData.runs.length;
+            
+            for(var i = 0; i < runDataLength; i++)
+            {
+            	if(alanData.runs[i+1])
+            	{
+            		//awful math to turn milliseconds into days.
+            		timeGaps.push((alanData.runs[i+1].date - alanData.runs[i].date)/1000/60/60/24);
+            	}
+            }
+            
 
             $(document).ready(function(){
                 //when doc is ready, draw data into 2-mile-runs chart
@@ -132,6 +151,8 @@
             $("#avgWeight").html("Average Weight: " + avgWeight.toFixed(2) + " lbs");
             $("#avgRunTime").html("Average 2 Mile Run Time: " + formatMathTimeToMinuteSecond(avgRunTime) + " minutes");
             $("#bestRunTime").html("Best 2 Mile Run Time: " + formatMathTimeToMinuteSecond(_.sortBy(alanData.runs, function(run){return run.timeMathed;})[0].timeMathed) + " minutes")
+            $("#longestTimeBetweenRuns").html("Longest Time Between Runs: " + _.max(timeGaps));
+            $("#averageTimeBetweenRuns").html("Average Time Between Runs: " + _.reduce(timeGaps, function(sum, gap){return sum+gap;},0)/timeGaps.length);
 
 
             //draw both charts
