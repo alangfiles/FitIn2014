@@ -54,10 +54,13 @@
             <div id="the-good" class="widget float-widget">
                 <h3>The Good</h3>
                 <div id="bestRunTime"></div>
+                <div id="minWeight"></div>
             </div>
 
             <div id="the-bad" class="widget float-widget">
                 <h3>The Bad</h3>
+                <div id="maxRunTime"></div>
+                <div id="maxWeight"></div>
                 <div id="longestTimeBetweenRuns"></div>
             </div>
 
@@ -163,10 +166,13 @@
                 
             $("#miles-rate").html("Current Rate: " + currentRate.toFixed(3) + " Miles Per Week<br/>"
                                 + "Ideal Rate: " + idealRate.toFixed(3) + " Miles Per Week");        
-
+            
+            $("#minWeight").html("Min Weight: " + _.min(alanData.weights, function(weight){return weight.pounds;}).pounds);
+            $("#maxWeight").html("Max Weight: " + _.max(alanData.weights, function(weight){return weight.pounds;}).pounds);
             $("#avgWeight").html("Average Weight: " + avgWeight.toFixed(2) + " lbs");
             $("#avgRunTime").html("Average 2 Mile Run Time: " + formatMathTimeToMinuteSecond(avgRunTime) + " minutes");
-            $("#bestRunTime").html("Best 2 Mile Run Time: " + formatMathTimeToMinuteSecond(_.sortBy(alanData.runs, function(run){return run.timeMathed;})[0].timeMathed) + " minutes")
+            $("#bestRunTime").html("Best 2 Mile Run Time: " + formatMathTimeToMinuteSecond(_.min(alanData.runs, function(run){return run.timeMathed;}).timeMathed) + " minutes")
+            $("#maxRunTime").html("Max 2 Mile Run Time: " + formatMathTimeToMinuteSecond(_.max(alanData.runs, function(run){return run.timeMathed;}).timeMathed) + " minutes")
             $("#longestTimeBetweenRuns").html("Longest Time Between Runs: " + _.max(timeGaps).toFixed(2) + " Days");
             $("#averageTimeBetweenRuns").html("Average Time Between Runs: " + (_.reduce(timeGaps, function(sum, gap){return sum+gap;},0)/timeGaps.length).toFixed(2) + " Days");
 
