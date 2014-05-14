@@ -151,8 +151,8 @@
             $("#avgWeight").html("Average Weight: " + avgWeight.toFixed(2) + " lbs");
             $("#avgRunTime").html("Average 2 Mile Run Time: " + formatMathTimeToMinuteSecond(avgRunTime) + " minutes");
             $("#bestRunTime").html("Best 2 Mile Run Time: " + formatMathTimeToMinuteSecond(_.sortBy(alanData.runs, function(run){return run.timeMathed;})[0].timeMathed) + " minutes")
-            $("#longestTimeBetweenRuns").html("Longest Time Between Runs: " + _.max(timeGaps));
-            $("#averageTimeBetweenRuns").html("Average Time Between Runs: " + _.reduce(timeGaps, function(sum, gap){return sum+gap;},0)/timeGaps.length);
+            $("#longestTimeBetweenRuns").html("Longest Time Between Runs: " + _.max(timeGaps).toFixed(2) + " Days");
+            $("#averageTimeBetweenRuns").html("Average Time Between Runs: " + (_.reduce(timeGaps, function(sum, gap){return sum+gap;},0)/timeGaps.length).toFixed(2) + " Days");
 
 
             //draw both charts
