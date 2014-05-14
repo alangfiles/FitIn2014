@@ -49,16 +49,26 @@
             <div id="text-stats" class="widget float-widget">
                 <div id="miles-run"></div>
                 <div id="miles-rate"></div>
-                <div id="avgRunTime"></div>
-                <div id="avgWeight"></div>
+            </div>
+            
+            <div id="the-good" class="widget float-widget">
+                <h2>The Good</h2>
                 <div id="bestRunTime"></div>
             </div>
-            
-            <div id="run-stats" class="widget float-widget">
+
+            <div id="the-bad" class="widget float-widget">
+                <h2>The Bad</h2>
                 <div id="longestTimeBetweenRuns"></div>
-                <div id="averageTimeBetweenRuns"></div>
             </div>
-            
+
+            <div id="the-average" class="widget float-widget">
+                <h2>The Average</h2>
+                <div id="avgRunTime"></div>
+                <div id="avgWeight"></div>
+                <div id="averageTimeBetweenRuns"></div>
+
+            </div>
+
             
         </div>
         
@@ -104,12 +114,8 @@
             		timeGaps.push((alanData.runs[i+1].date - alanData.runs[i].date)/1000/60/60/24);
             	}
             }
-            
 
-            $(document).ready(function(){
-                //when doc is ready, draw data into 2-mile-runs chart
-
-                var alansRunData = [];
+            var alansRunData = [];
                 for(var i = 0, run; run = alanData.runs[i]; i++)
                 {
                     alansRunData.push([run.date, run.timeMathed, run.note]);
@@ -145,6 +151,12 @@
             var idealMiles = getIdealMiles();
             var milesRun = getMilesRun();
             var currentRate = getMilesRun() / today.getWeek();
+            
+
+            $(document).ready(function(){
+                //when doc is ready, draw data into 2-mile-runs chart
+
+                
             $("#miles-rate").html("Current Rate: " + currentRate.toFixed(3) + " Miles Per Week<br/>"
                                 + "Ideal Rate: " + idealRate.toFixed(3) + " Miles Per Week");        
 
