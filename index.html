@@ -120,11 +120,6 @@
             		//awful math to turn milliseconds into days.
             		timeGaps.push((alanData.runs[i+1].date - alanData.runs[i].date)/1000/60/60/24);
             	}
-            	else{
-            	    //if there is no run+1 index, we're on the last run entry.
-            	    //so add the gap between that run, and RIGHT NOW!
-            	    timeGaps.push((new Date() - alanData.runs[i].date)/1000/60/60/24);
-            	}
             }
 
             var alansRunData = [];
