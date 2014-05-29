@@ -224,6 +224,12 @@ var alanData = {
 			"timeFormatted": "14:06",
 			"timeMathed": 14+06/60,
 			"date": Date.UTC(2014, 4, 27, 18, 00)
+		},
+		{
+			"timeFormatted": "13:59",
+			"timeMathed": 13+59/60,
+			"date": Date.UTC(2014, 4, 29, 18, 00),
+			"note": "with noah, with ryan"
 		}
 		
 		// {
