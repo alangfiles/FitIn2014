@@ -112,7 +112,7 @@
             function getTimeSinceLastRun(){
                 var lastRunDate = new Date(alanData.runs[alanData.runs.length-1].date);
                 var todaysDate = new Date();
-                var timeSpan = lastRunDate - todaysDate;
+                var timeSpan = new Date(lastRunDate - todaysDate);
                 var retString = "";
                 if(timeSpan.getDate() > 1){ 
                     retString += timeSpan.getDate()-1;
@@ -131,7 +131,7 @@
                     ? "0"+timeSpan.getMinutes()
                     : timeSpan.getMinutes());
                 retString += " Minutes";
-                
+
                 return retString;
             }
             
