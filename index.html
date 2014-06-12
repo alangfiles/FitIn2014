@@ -76,6 +76,11 @@
                 <div id="miles-rate"></div>
             </div>
 
+            <div id="time-since-last-run-stats" class="widget float-widget">
+                <h3>Time Since Last Run</h3>
+                <h2 id="time-since-last-run"></div>
+            </div>
+
             
         </div>
         
@@ -103,6 +108,31 @@
             
             function getMilesRun(){
                 return alanData.runs.length * 2;
+            }
+            function getTimeSinceLastRun(){
+                var lastRunDate = new Date(alanData.runs[alanData.runs.length-1].date);
+                var todaysDate = new Date();
+                var timeSpan = lastRunDate - todaysDate;
+                var retString = "";
+                if(timeSpan.getDate() > 1){ 
+                    retString += timeSpan.getDate()-1;
+                    if(timeSpan.getDate() > 2){
+                        retString += " Days ";
+                    }
+                    else{
+                        retString += " Day ";
+                    }
+                }
+                retString += (timeSpan.getHours().length < 2 
+                    ? "0"+timeSpan.getHours()
+                    : timeSpan.getHours());
+                retString += " Hours ";
+                retString += (timeSpan.getMinutes().length < 2 
+                    ? "0"+timeSpan.getMinutes()
+                    : timeSpan.getMinutes());
+                retString += " Minutes";
+                
+                return retString;
             }
             
             Date.prototype.getWeek = function() {
@@ -175,6 +205,7 @@
             $("#maxRunTime").html("Max 2 Mile Run Time: " + formatMathTimeToMinuteSecond(_.max(alanData.runs, function(run){return run.timeMathed;}).timeMathed) + " minutes")
             $("#longestTimeBetweenRuns").html("Longest Time Between Runs: " + _.max(timeGaps).toFixed(2) + " Days");
             $("#averageTimeBetweenRuns").html("Average Time Between Runs: " + (_.reduce(timeGaps, function(sum, gap){return sum+gap;},0)/timeGaps.length).toFixed(2) + " Days");
+            $("#time-since-last-run").html(getTimeSinceLastRun());
 
 
             //draw both charts
