@@ -116,21 +116,16 @@
                 var retString = "";
                 if(timeSpan.getDate() > 1){ 
                     retString += timeSpan.getDate()-1;
-                    if(timeSpan.getDate() > 2){
-                        retString += " Days ";
-                    }
-                    else{
-                        retString += " Day ";
-                    }
+                    retString += ":";
                 }
                 retString += (timeSpan.getHours().length < 2 
-                    ? "0"+timeSpan.getHours()
+                    ? "0"+timeSpan.getHours().toString();
                     : timeSpan.getHours());
-                retString += " Hours ";
+                retString += ":";
                 retString += (timeSpan.getMinutes().length < 2 
-                    ? "0"+timeSpan.getMinutes()
+                    ? "0"+timeSpan.getMinutes().toString()
                     : timeSpan.getMinutes());
-                retString += " Minutes";
+                retString += "";
 
                 return retString;
             }
