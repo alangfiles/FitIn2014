@@ -270,6 +270,11 @@ var alanData = {
 			"timeFormatted": "14:52",
 			"timeMathed": 14+52/60,
 			"date": Date.UTC(2014, 5, 19, 18, 15),
+		},
+		{
+			"timeFormatted": "14:54",
+			"timeMathed": 14+54/60,
+			"date": Date.UTC(2014, 5, 21, 10, 00),
 		}
 		
 		
@@ -441,6 +446,7 @@ var alanData = {
 	    {"pounds": 176.8, "Time": "8:00 AM", "date": "6/18/2014"},
 	    {"pounds": 174.8, "Time": "8:00 AM", "date": "6/19/2014"},
 	    {"pounds": 177.2, "Time": "8:00 AM", "date": "6/20/2014"},
+	    {"pounds": 176.8, "Time": "8:00 AM", "date": "6/21/2014"},
 	    // {"pounds": , "Time": "", "date": ""}
   ]
 }
