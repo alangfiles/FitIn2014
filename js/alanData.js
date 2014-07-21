@@ -298,6 +298,16 @@ var alanData = {
 			"timeMathed": 16+42/60,
 			"date": Date.UTC(2014, 6, 18, 20, 48),
 			"note": "with noah"
+		},
+		{
+			"timeFormatted": "15:56",
+			"timeMathed": 15+56/60,
+			"date": Date.UTC(2014, 6, 21, 17, 00)
+		},
+		{
+			"timeFormatted": "15:45",
+			"timeMathed": 15+45/60,
+			"date": Date.UTC(2014, 6, 21, 17, 16)
 		}
 		
 		
