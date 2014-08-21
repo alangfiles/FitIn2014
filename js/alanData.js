@@ -310,8 +310,8 @@ var alanData = {
 			"date": Date.UTC(2014, 6, 21, 17, 16)
 		},
 		{
-			"timeFormatted": "17:00",
-			"timeMathed": 17+00/60,
+			"timeFormatted": "16:59",
+			"timeMathed": 16+59/60,
 			"date": Date.UTC(2014, 7, 18, 18, 16)
 		},
 		{
@@ -320,11 +320,15 @@ var alanData = {
 			"date": Date.UTC(2014, 7, 18, 18, 36)
 		},
 		{
-			"timeFormatted": "17:00",
-			"timeMathed": 17+00/60,
+			"timeFormatted": "17:01",
+			"timeMathed": 17+01/60,
 			"date": Date.UTC(2014, 7, 18, 18, 56)
+		},
+		{
+			"timeFormatted": "17:59",
+			"timeMathed": 17+59/60,
+			"date": Date.UTC/(2014,7,21,7,00)
 		}
-		
 		
 		// {
 		// 	"timeFormatted": "15:40",
