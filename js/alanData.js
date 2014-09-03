@@ -356,6 +356,11 @@ var alanData = {
 			"timeMathed": 21+00/60,
 			"date": Date.UTC(2014,7,30,14,42),
 			"note":"6 mile, 90 degrees"
+		},
+		{
+			"timeFormatted": "14:31",
+			"timeMathed": 14+31/60,
+			"date": Date.UTC(2014,8,2,16,42)
 		}
 		
 		// {
