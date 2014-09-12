@@ -335,13 +335,29 @@
                 },
                 
                 series: [
+                		{	
+                    		type: 'line',
+                        name: 'Run Regression',
+                        yAxis: 0,
+                        color: '#AA4643',
+                        data: linearRegression(alansRunData)
+                    },
+                    {	
+                    		type: 'line',
+                        name: 'Weight Regression',
+                        yAxis: 1,
+                        color: '#4572A7',
+                        data: linearRegression(alanWeightData)
+                    },
                     {
+                    		type: 'scatter',
                         name: 'Run Times (2 miles)',
                         yAxis: 0,
                         color: '#AA4643',
                         data: alansRunData
                     },
                     {
+                    		type: 'scatter',
                         name: 'Weight',
                         yAxis: 1,
                         color: '#4572A7',
@@ -351,8 +367,8 @@
             });
     });
     
-    //returns a function that calcs the y given x
-    function leastSquaresLinearRegression(scatterArray){
+
+  function linearRegression(scatterArray){
 	var meanX = 0,
 	    meanY = 0, 
 	    meanXY = 0, 
@@ -377,7 +393,14 @@
 	slope = (meanX * meanY - meanXY ) / ((meanX * meanX) - meanXsquared);
 	interscept = (meanY) - (slope * (meanX));
 
-	return (function(x){return (slope * x) + interscept;});
+	var calcY = function(x){return slope*x+interscept;};
+
+	var returnArray = [];
+	for(var i = 0, points; points = scatterArray[i]; i++){
+		returnArray.push([points[0], calcY(points[1])]);
+	}
+
+	return returnArray;
 }
 
             
