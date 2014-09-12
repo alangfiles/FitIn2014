@@ -350,6 +350,35 @@
                 ]
             });
     });
+    
+    //returns a function that calcs the y given x
+    function leastSquaresLinearRegression(scatterArray){
+	var meanX = 0,
+	    meanY = 0, 
+	    meanXY = 0, 
+	    meanXsquared = 0,
+	    slope = 0,
+	    interscept = 0;
+
+	for(var i = 0, points; points = scatterArray[i]; i++){
+		meanX += points[0];
+		meanY += points[1];
+		meanXY += points[0] * points[1];
+		meanXsquared += points[0]*points[0];
+	}
+
+	var arrayLength = scatterArray.length;
+
+	meanX = meanX/arrayLength;
+	meanY = meanY/arrayLength;
+	meanXY = meanXY/arrayLength;
+	meanXsquared = meanXsquared/arrayLength;
+
+	slope = (meanX * meanY - meanXY ) / ((meanX * meanX) - meanXsquared);
+	interscept = (meanY) - (slope * (meanX));
+
+	return (function(x){return (slope * x) + interscept;});
+}
 
             
             
