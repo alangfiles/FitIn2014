@@ -159,8 +159,8 @@
                     alanWeightData.push([Date.parse(weight.date), weight.pounds]);
                 }
 
-            var alansRunRegression;
-            var alanWeightRegression;
+            var alansRunRegression = [];
+            var alanWeightRegression = [];
             var runRegressionFunction = leastSquaresLinearRegression(alansRunData);
             var weightRegressionFunction = leastSquaresLinearRegression(alanWeightData);
 
