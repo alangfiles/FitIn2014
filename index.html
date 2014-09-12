@@ -349,26 +349,19 @@
                 },
                 
                 series: [
-                		{	
-                    		type: 'line',
-                        name: 'Run Regression',
-                        yAxis: 0,
-                        color: '#AA4643',
-                        data: alansRunRegression
-                    },
-                    {	
-                    		type: 'line',
-                        name: 'Weight Regression',
-                        yAxis: 1,
-                        color: '#4572A7',
-                        data: alanWeightRegression
-                    },
                     {
                     		type: 'scatter',
                         name: 'Run Times (2 miles)',
                         yAxis: 0,
                         color: '#AA4643',
                         data: alansRunData
+                    },
+                    {	
+                    		type: 'line',
+                        name: 'Run Regression',
+                        yAxis: 0,
+                        color: '#AA4643',
+                        data: alansRunRegression
                     },
                     {
                     		type: 'scatter',
@@ -377,6 +370,13 @@
                         color: '#4572A7',
                         data: alanWeightData
                     },
+                    {	
+                    		type: 'line',
+                        name: 'Weight Regression',
+                        yAxis: 1,
+                        color: '#4572A7',
+                        data: alanWeightRegression
+                    }
                 ]
             });
     });
