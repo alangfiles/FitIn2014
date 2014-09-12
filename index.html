@@ -165,13 +165,13 @@
             var weightRegressionFunction = leastSquaresLinearRegression(alanWeightData);
 
             //for the run regression, just push the first and last points.
-            alansRunRegression.push(alansRunData[0][0], runRegressionFunction(alansRunData[0][0]));
-            alansRunRegression.push(alansRunData[alansRunData.length-1][0], runRegressionFunction(alansRunData[alansRunData.length-1][0]));
+            alansRunRegression.push([alansRunData[0][0], runRegressionFunction(alansRunData[0][0])]);
+            alansRunRegression.push([alansRunData[alansRunData.length-1][0], runRegressionFunction(alansRunData[alansRunData.length-1][0])]);
 
 
             //for the weight regression, just push the first and last points.
-            alanWeightRegression.push(alanWeightData[0][0], weightRegressionFunction(alanWeightData[0][0]));
-            alanWeightRegression.push(alanWeightData[alanWeightData.length-1][0], weightRegressionFunction(alanWeightData[alanWeightData.length-1][0]));
+            alanWeightRegression.push([alanWeightData[0][0], weightRegressionFunction(alanWeightData[0][0])]);
+            alanWeightRegression.push([alanWeightData[alanWeightData.length-1][0], weightRegressionFunction(alanWeightData[alanWeightData.length-1][0])]);
 
                 $("#miles-run").html("Current Miles: " + getMilesRun() + " Miles Run<br/>"
                                     +"Ideal Miles: " + getIdealMiles() + " Miles Run");        
