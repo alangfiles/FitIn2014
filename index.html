@@ -159,6 +159,20 @@
                     alanWeightData.push([Date.parse(weight.date), weight.pounds]);
                 }
 
+            var alansRunRegression;
+            var alanWeightRegression;
+            var runRegressionFunction = leastSquaresLinearRegression(alansRunData);
+            var weightRegressionFunction = leastSquaresLinearRegression(alanWeightData);
+
+            //for the run regression, just push the first and last points.
+            alansRunRegression.push([alansRunData[0], runRegressionFunction(alansRunData[0])]);
+            alansRunRegression.push([alansRunData[alansRunData.length-1], runRegressionFunction(alansRunData[alansRunData.length-1])]);
+
+
+            //for the weight regression, just push the first and last points.
+            alanWeightRegression.push([alanWeightData[0], weightRegressionFunction(alanWeightData[0])]);
+            alanWeightRegression.push([alanWeightData[alanWeightData.length-1], weightRegressionFunction(alanWeightData[alanWeightData.length-1])]);
+
                 $("#miles-run").html("Current Miles: " + getMilesRun() + " Miles Run<br/>"
                                     +"Ideal Miles: " + getIdealMiles() + " Miles Run");        
             
@@ -340,14 +354,14 @@
                         name: 'Run Regression',
                         yAxis: 0,
                         color: '#AA4643',
-                        data: linearRegression(alansRunData)
+                        data: alansRunRegression
                     },
                     {	
                     		type: 'line',
                         name: 'Weight Regression',
                         yAxis: 1,
                         color: '#4572A7',
-                        data: linearRegression(alanWeightData)
+                        data: alanWeightRegression
                     },
                     {
                     		type: 'scatter',
@@ -367,8 +381,8 @@
             });
     });
     
-
-  function linearRegression(scatterArray){
+    //returns a function that calcs the y given x
+    function leastSquaresLinearRegression(scatterArray){
 	var meanX = 0,
 	    meanY = 0, 
 	    meanXY = 0, 
@@ -393,14 +407,7 @@
 	slope = (meanX * meanY - meanXY ) / ((meanX * meanX) - meanXsquared);
 	interscept = (meanY) - (slope * (meanX));
 
-	var calcY = function(x){return slope*x+interscept;};
-
-	var returnArray = [];
-	for(var i = 0, points; points = scatterArray[i]; i++){
-		returnArray.push([points[0], calcY(points[1])]);
-	}
-
-	return returnArray;
+	return (function(x){return (slope * x) + interscept;});
 }
 
             
