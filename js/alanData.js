@@ -367,6 +367,16 @@ var alanData = {
 			"timeMathed": 15+25/60,
 			"date": Date.UTC(2014,8,6,09,40),
 			"note": "with Ryan and Noah"
+		},
+		{
+			"timeFormatted": "16:02",
+			"timeMathed": 16+2/60,
+			"date": Date.UTC(2014,8,23,19,20)
+		},
+		{
+			"timeFormatted": "16:10",
+			"timeMathed": 16+10/60,
+			"date": Date.UTC(2014,8,23,19,37)
 		}
 		
 		// {
