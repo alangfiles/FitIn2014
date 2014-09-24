@@ -599,10 +599,15 @@ var alanData = {
   "date":1400140800000,
   "milesRun":4
 },
-{"timeFormatted":"31:44",
-  "timeMathed":31+44/60,
+{"timeFormatted":"16:37",
+  "timeMathed":16.616666666666667,
+  "date":1401780600000,
+  "milesRun":2
+},  
+{"timeFormatted":"15:07",
+  "timeMathed":15.116666666666667,
   "date":1401820200000,
-  "milesRun":4
+  "milesRun":2
 },
 {"timeFormatted":"33:52",
   "timeMathed":33+52/60,
