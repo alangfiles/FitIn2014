@@ -349,7 +349,7 @@
           formatter: function() {
             if(this.series.name == 'Run Times'){
               return '<b>'+ this.series.name +'</b><br/>'+
-              Highcharts.dateFormat('%e %b %Y', this.x) +': '+ formatMathTimeToMinuteSecond(this.y) + " minutes <br/>"+this.z; 
+              Highcharts.dateFormat('%e %b %Y', this.x) +': '+ formatMathTimeToMinuteSecond(this.y) + " minutes <br/>"+this.note; 
             }
             else{
               return '<b>'+ this.series.name +'</b><br/>'+
