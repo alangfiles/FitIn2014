@@ -221,8 +221,8 @@
       $("#maxWeight").html("Max Weight: " + _.max(alanData.weights, function(weight){return weight.pounds;}).pounds);
       $("#avgWeight").html("Average Weight: " + avgWeight.toFixed(2) + " lbs");
       $("#avgRunTime").html("Average Mile Run Time: " + formatMathTimeToMinuteSecond(avgRunTime) + " minutes");
-      $("#bestRunTime").html("Best Mile Run Time: " + formatMathTimeToMinuteSecond(_.min(individualMileRuns, function(run){return run.timeMathed;}).timeMathed) + " minutes")
-      $("#maxRunTime").html("Max Mile Run Time: " + formatMathTimeToMinuteSecond(_.max(individualMileRuns, function(run){return run.timeMathed;}).timeMathed) + " minutes")
+      $("#bestRunTime").html("Best Mile Run Time: " + formatMathTimeToMinuteSecond(_.min(oneMileAverages, function(run){return run.timeMathed;}).timeMathed) + " minutes")
+      $("#maxRunTime").html("Max Mile Run Time: " + formatMathTimeToMinuteSecond(_.max(oneMileAverages, function(run){return run.timeMathed;}).timeMathed) + " minutes")
       $("#longestTimeBetweenRuns").html("Longest Time Between Runs: " + _.max(timeGaps).toFixed(2) + " Days");
       $("#averageTimeBetweenRuns").html("Average Time Between Runs: " + (_.reduce(timeGaps, function(sum, gap){return sum+gap;},0)/timeGaps.length).toFixed(2) + " Days");
       $("#time-since-last-run").html(getTimeSinceLastRun());
