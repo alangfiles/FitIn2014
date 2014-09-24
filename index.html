@@ -161,7 +161,7 @@
       var alansRunData = [];
         for(var i = 0, run; run = oneMileAverages[i]; i++)
         {
-          alansRunData.push([run.date, run.timeMathed, run.note]);
+          alansRunData.push([{x: run.date, y: run.timeMathed, name: run.note}]);
         }
 
         var alanWeightData = [];
@@ -350,7 +350,7 @@
             if(this.series.name == 'Run Times'){
                 console.log(this);
               return '<b>'+ this.series.name +'</b><br/>'+
-              Highcharts.dateFormat('%e %b %Y', this.x) +': '+ formatMathTimeToMinuteSecond(this.y) + " minutes <br/>"+this.note; 
+              Highcharts.dateFormat('%e %b %Y', this.x) +': '+ formatMathTimeToMinuteSecond(this.y) + " minutes <br/>"+this.name; 
             }
             else{
               return '<b>'+ this.series.name +'</b><br/>'+
