@@ -348,6 +348,7 @@
           shared: false,
           formatter: function() {
             if(this.series.name == 'Run Times'){
+                console.log(this);
               return '<b>'+ this.series.name +'</b><br/>'+
               Highcharts.dateFormat('%e %b %Y', this.x) +': '+ formatMathTimeToMinuteSecond(this.y) + " minutes <br/>"+this.note; 
             }
