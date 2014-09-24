@@ -1,394 +1,405 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Fit in 2014</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Fit in 2014</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+    #run-goal{
+      width:300px;
+      height:180px;
+    }
+    #weights-and-runs{
+      height:400px;
+    }
+    #wrapper{
+      width:800;
+      margin: 0 auto;
+    }
+    #wrapper h1{
+      text-align:center;
+    }
+    .widget{
+      background-color: #EEE;
+      border: 1px solid #CCC;
+      border-radius: 5px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      padding:10px;
+      margin:10px;
+    }
+    .float-widget{
+      float:left;
+    }
+    .widget h3{
+      text-align:center;
+      margin:0;
+      margin-bottom:5px;
+    }
+    </style>
+  </head>
+  <body>
+    
+    <div id="wrapper">
+      <h1>Fit in 2014!</h1>
+      <div id="weights-and-runs" class="widget"></div>
+      
+      <div id="run-goal" class="widget float-widget"></div>
+      
+      <div id="the-good" class="widget float-widget">
+        <h3>The Good</h3>
+        <div id="bestRunTime"></div>
+        <div id="minWeight"></div>
+      </div>
+
+      <div id="the-bad" class="widget float-widget">
+        <h3>The Bad</h3>
+        <div id="maxRunTime"></div>
+        <div id="maxWeight"></div>
+        <div id="longestTimeBetweenRuns"></div>
+      </div>
+
+      <div id="the-average" class="widget float-widget">
+        <h3>The Average</h3>
+        <div id="avgRunTime"></div>
+        <div id="avgWeight"></div>
+        <div id="averageTimeBetweenRuns"></div>
+      </div>
+
+      <div id="text-stats" class="widget float-widget">
+        <div id="miles-run"></div>
+        <div id="miles-rate"></div>
+      </div>
+
+      <div id="time-since-last-run-stats" class="widget float-widget">
+        <h3>Time Since Last Run</h3>
+        <div id="time-since-last-run"></div>
+      </div>
+
+      
+    </div>
+    
+    <script src="js/vendor/jquery-1.10.2.min.js"></script>
+    <script src="js/vendor/highcharts.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/alanData.js"></script>
+    <script src="http://underscorejs.org/underscore-min.js"></script>
+    
+    <script>
+      function formatMathTimeToMinuteSecond(runTime)
+      {
+        return Math.floor(runTime) + ":" +  //minutes rounded
+            (((runTime%1)*60).toFixed(0) < 10  //seconds rounded.
+               ? "0"+((runTime%1)*60).toFixed(0) //add leading zero for seconds less than 10
+               : ((runTime%1)*60).toFixed(0));         
+      }
+      
+      function getIdealMiles(){
+        var idealRate = 200/52;
+        var today = new Date();
+        return (idealRate*today.getWeek()).toFixed(3);
+      }
+      
+      function getMilesRun(){
+        return alanData.runs.length * 2;
+      }
+      function getTimeSinceLastRun(){
+        var lastRunDate = new Date(alanData.runs[alanData.runs.length-1].date);
+        var todaysDate = new Date();
+        var timeSpan = new Date(todaysDate - lastRunDate);
+        var retString = "";
+        if(timeSpan.getDate() > 1){ 
+          retString += timeSpan.getDate()-1;
+          retString += ":";
+        }
+        retString += (timeSpan.getHours().length < 2 
+          ? "0"+timeSpan.getHours().toString()
+          : timeSpan.getHours());
+        retString += ":";
+        retString += (timeSpan.getMinutes().length < 2 
+          ? "0"+timeSpan.getMinutes().toString()
+          : timeSpan.getMinutes());
+        retString += "";
+
+        return retString;
+      }
+      
+      Date.prototype.getWeek = function() {
+        var onejan = new Date(this.getFullYear(),0,1);
+        return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
+      }
+      
+      var timeGaps = [];
+      var runDataLength = alanData.runs.length;
+      
+      for(var i = 0; i < runDataLength; i++)
+      {
+      	if(alanData.runs[i+1])
+      	{
+      		//awful math to turn milliseconds into days.
+      		timeGaps.push((alanData.runs[i+1].date - alanData.runs[i].date)/1000/60/60/24);
+      	}
+      }
+
+      var oneMileAverages = [];
+      for(var i = 0, run; run = alanData.runsByDistance[i]; i++){
+        for(var j = 0; j < run.milesRun; j++){
+          var oneMileRun = {};
+          oneMileRun.date = run.date;
+          oneMileRun.timeMathed = run.timeMathed/run.milesRun;
+          oneMileRun.note = run.note;
+          oneMileAverages.push(oneMileRun);
+        }
+      }
+
+      var alansRunData = [];
+        for(var i = 0, run; run = oneMileAverages[i]; i++)
+        {
+          alansRunData.push([run.date, run.timeMathed, run.note]);
+        }
+
+        var alanWeightData = [];
+        for(var i = 0, weight; weight = alanData.weights[i]; i++)
+        {
+          alanWeightData.push([Date.parse(weight.date), weight.pounds]);
+        }
+
+      var alansRunRegression = [];
+      var alanWeightRegression = [];
+      var runRegressionFunction = leastSquaresLinearRegression(alansRunData);
+      var weightRegressionFunction = leastSquaresLinearRegression(alanWeightData);
+
+      //for the run regression, just push the first and last points.
+      alansRunRegression.push([alansRunData[0][0], runRegressionFunction(alansRunData[0][0])]);
+      alansRunRegression.push([alansRunData[alansRunData.length-1][0], runRegressionFunction(alansRunData[alansRunData.length-1][0])]);
+
+
+      //for the weight regression, just push the first and last points.
+      alanWeightRegression.push([alanWeightData[0][0], weightRegressionFunction(alanWeightData[0][0])]);
+      alanWeightRegression.push([alanWeightData[alanWeightData.length-1][0], weightRegressionFunction(alanWeightData[alanWeightData.length-1][0])]);
+
+        $("#miles-run").html("Current Miles: " + getMilesRun() + " Miles Run<br/>"
+                  +"Ideal Miles: " + getIdealMiles() + " Miles Run");    
+      
+
+      var avgWeight = 0;
+      for(var i =0, lb; lb = alanData.weights[i]; i++)
+      {
+        avgWeight = avgWeight + lb.pounds;
+      }
+      avgWeight = avgWeight/alanData.weights.length;
+      
+      var avgRunTime = 0;
+      for(var i =0, run; run = alanData.runs[i]; i++)
+      {
+        avgRunTime = avgRunTime + run.timeMathed;
+      }
+      avgRunTime = avgRunTime/alanData.runs.length;
+      
+      
+      var idealRate = 200/52;
+      var today = new Date();
+      var idealMiles = getIdealMiles();
+      var milesRun = getMilesRun();
+      var currentRate = getMilesRun() / today.getWeek();
+      
+
+      $(document).ready(function(){
+        //when doc is ready, draw data into 2-mile-runs chart
+
         
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
-        <style>
-        #run-goal{
-            width:300px;
-            height:180px;
+      $("#miles-rate").html("Current Rate: " + currentRate.toFixed(3) + " Miles Per Week<br/>"
+                + "Ideal Rate: " + idealRate.toFixed(3) + " Miles Per Week");    
+      
+      $("#minWeight").html("Min Weight: " + _.min(alanData.weights, function(weight){return weight.pounds;}).pounds);
+      $("#maxWeight").html("Max Weight: " + _.max(alanData.weights, function(weight){return weight.pounds;}).pounds);
+      $("#avgWeight").html("Average Weight: " + avgWeight.toFixed(2) + " lbs");
+      $("#avgRunTime").html("Average Mile Run Time: " + formatMathTimeToMinuteSecond(avgRunTime) + " minutes");
+      $("#bestRunTime").html("Best Mile Run Time: " + formatMathTimeToMinuteSecond(_.min(individualMileRuns, function(run){return run.timeMathed;}).timeMathed) + " minutes")
+      $("#maxRunTime").html("Max Mile Run Time: " + formatMathTimeToMinuteSecond(_.max(individualMileRuns, function(run){return run.timeMathed;}).timeMathed) + " minutes")
+      $("#longestTimeBetweenRuns").html("Longest Time Between Runs: " + _.max(timeGaps).toFixed(2) + " Days");
+      $("#averageTimeBetweenRuns").html("Average Time Between Runs: " + (_.reduce(timeGaps, function(sum, gap){return sum+gap;},0)/timeGaps.length).toFixed(2) + " Days");
+      $("#time-since-last-run").html(getTimeSinceLastRun());
+
+
+      //draw both charts
+      
+    $('#run-goal').highcharts({
+      chart: {
+        type: 'bar'
+      },
+      title: {
+        text: ''
+      },
+      xAxis: {
+        min:0,
+        max:0,
+        labels:{
+          enabled:false
         }
-        #weights-and-runs{
-            height:400px;
+      },
+      yAxis: [{
+        min: 0,
+        max: 200,
+        title: {
+          text: 'Total Miles',
         }
-        #wrapper{
-            width:800;
-            margin: 0 auto;
-        }
-        #wrapper h1{
-            text-align:center;
-        }
-        .widget{
-            background-color: #EEE;
-            border: 1px solid #CCC;
-            border-radius: 5px;
-            -webkit-border-radius: 5px;
-            -moz-border-radius: 5px;
-            padding:10px;
-            margin:10px;
-        }
-        .float-widget{
-            float:left;
-        }
-        .widget h3{
-            text-align:center;
-            margin:0;
-            margin-bottom:5px;
-        }
-        </style>
-    </head>
-    <body>
-        
-        <div id="wrapper">
-            <h1>Fit in 2014!</h1>
-            <div id="weights-and-runs" class="widget"></div>
-            
-            <div id="run-goal" class="widget float-widget"></div>
-            
-            <div id="the-good" class="widget float-widget">
-                <h3>The Good</h3>
-                <div id="bestRunTime"></div>
-                <div id="minWeight"></div>
-            </div>
+      },
+      {
+        title: {
+          text: '',
+        },
+        labels: {
+          enabled:false,
+        },
+        min: 0,
+        max: 200
+       }
+           ],
+      plotOptions: {
+        bar: {
+          dataLabels: {
+            enabled: false,
+          },
+        },
+      },
+      tooltip:{
+        enabled:false
+      },
+      legend: {
+        enabled: false
+      },
+      credits: {
+        enabled: false
+      },
+      series: [ 
+        {
+        name: 'Current Miles Run',
+        data: [parseFloat(getMilesRun())],
+        type: 'bar'
+        },
+        {
+        name: 'Ideal Average Rate',
+        color: '#89A54E',
+        type: 'line',
+        yAxis: 1,
+        data: [[-1, parseFloat(getIdealMiles())],[1,parseFloat(getIdealMiles())]],
+        } 
+      ]
+    });
 
-            <div id="the-bad" class="widget float-widget">
-                <h3>The Bad</h3>
-                <div id="maxRunTime"></div>
-                <div id="maxWeight"></div>
-                <div id="longestTimeBetweenRuns"></div>
-            </div>
-
-            <div id="the-average" class="widget float-widget">
-                <h3>The Average</h3>
-                <div id="avgRunTime"></div>
-                <div id="avgWeight"></div>
-                <div id="averageTimeBetweenRuns"></div>
-            </div>
-
-            <div id="text-stats" class="widget float-widget">
-                <div id="miles-run"></div>
-                <div id="miles-rate"></div>
-            </div>
-
-            <div id="time-since-last-run-stats" class="widget float-widget">
-                <h3>Time Since Last Run</h3>
-                <div id="time-since-last-run"></div>
-            </div>
-
-            
-        </div>
-        
-        <script src="js/vendor/jquery-1.10.2.min.js"></script>
-        <script src="js/vendor/highcharts.js"></script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
-        <script src="js/alanData.js"></script>
-        <script src="http://underscorejs.org/underscore-min.js"></script>
-        
-        <script>
-            function formatMathTimeToMinuteSecond(runTime)
-            {
-                return Math.floor(runTime) + ":" +  //minutes rounded
-                        (((runTime%1)*60).toFixed(0) < 10  //seconds rounded.
-                           ? "0"+((runTime%1)*60).toFixed(0) //add leading zero for seconds less than 10
-                           : ((runTime%1)*60).toFixed(0));                 
-            }
-            
-            function getIdealMiles(){
-                var idealRate = 200/52;
-                var today = new Date();
-                return (idealRate*today.getWeek()).toFixed(3);
-            }
-            
-            function getMilesRun(){
-                return alanData.runs.length * 2;
-            }
-            function getTimeSinceLastRun(){
-                var lastRunDate = new Date(alanData.runs[alanData.runs.length-1].date);
-                var todaysDate = new Date();
-                var timeSpan = new Date(todaysDate - lastRunDate);
-                var retString = "";
-                if(timeSpan.getDate() > 1){ 
-                    retString += timeSpan.getDate()-1;
-                    retString += ":";
-                }
-                retString += (timeSpan.getHours().length < 2 
-                    ? "0"+timeSpan.getHours().toString()
-                    : timeSpan.getHours());
-                retString += ":";
-                retString += (timeSpan.getMinutes().length < 2 
-                    ? "0"+timeSpan.getMinutes().toString()
-                    : timeSpan.getMinutes());
-                retString += "";
-
-                return retString;
-            }
-            
-            Date.prototype.getWeek = function() {
-                var onejan = new Date(this.getFullYear(),0,1);
-                return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
-            }
-            
-            var timeGaps = [];
-            var runDataLength = alanData.runs.length;
-            
-            for(var i = 0; i < runDataLength; i++)
-            {
-            	if(alanData.runs[i+1])
-            	{
-            		//awful math to turn milliseconds into days.
-            		timeGaps.push((alanData.runs[i+1].date - alanData.runs[i].date)/1000/60/60/24);
-            	}
-            }
-
-            var alansRunData = [];
-                for(var i = 0, run; run = alanData.runs[i]; i++)
-                {
-                    alansRunData.push([run.date, run.timeMathed, run.note]);
-                }
-
-                var alanWeightData = [];
-                for(var i = 0, weight; weight = alanData.weights[i]; i++)
-                {
-                    alanWeightData.push([Date.parse(weight.date), weight.pounds]);
-                }
-
-            var alansRunRegression = [];
-            var alanWeightRegression = [];
-            var runRegressionFunction = leastSquaresLinearRegression(alansRunData);
-            var weightRegressionFunction = leastSquaresLinearRegression(alanWeightData);
-
-            //for the run regression, just push the first and last points.
-            alansRunRegression.push([alansRunData[0][0], runRegressionFunction(alansRunData[0][0])]);
-            alansRunRegression.push([alansRunData[alansRunData.length-1][0], runRegressionFunction(alansRunData[alansRunData.length-1][0])]);
-
-
-            //for the weight regression, just push the first and last points.
-            alanWeightRegression.push([alanWeightData[0][0], weightRegressionFunction(alanWeightData[0][0])]);
-            alanWeightRegression.push([alanWeightData[alanWeightData.length-1][0], weightRegressionFunction(alanWeightData[alanWeightData.length-1][0])]);
-
-                $("#miles-run").html("Current Miles: " + getMilesRun() + " Miles Run<br/>"
-                                    +"Ideal Miles: " + getIdealMiles() + " Miles Run");        
-            
-
-            var avgWeight = 0;
-            for(var i =0, lb; lb = alanData.weights[i]; i++)
-            {
-                avgWeight = avgWeight + lb.pounds;
-            }
-            avgWeight = avgWeight/alanData.weights.length;
-            
-            var avgRunTime = 0;
-            for(var i =0, run; run = alanData.runs[i]; i++)
-            {
-                avgRunTime = avgRunTime + run.timeMathed;
-            }
-            avgRunTime = avgRunTime/alanData.runs.length;
-            
-            
-            var idealRate = 200/52;
-            var today = new Date();
-            var idealMiles = getIdealMiles();
-            var milesRun = getMilesRun();
-            var currentRate = getMilesRun() / today.getWeek();
-            
-
-            $(document).ready(function(){
-                //when doc is ready, draw data into 2-mile-runs chart
-
-                
-            $("#miles-rate").html("Current Rate: " + currentRate.toFixed(3) + " Miles Per Week<br/>"
-                                + "Ideal Rate: " + idealRate.toFixed(3) + " Miles Per Week");        
-            
-            $("#minWeight").html("Min Weight: " + _.min(alanData.weights, function(weight){return weight.pounds;}).pounds);
-            $("#maxWeight").html("Max Weight: " + _.max(alanData.weights, function(weight){return weight.pounds;}).pounds);
-            $("#avgWeight").html("Average Weight: " + avgWeight.toFixed(2) + " lbs");
-            $("#avgRunTime").html("Average 2 Mile Run Time: " + formatMathTimeToMinuteSecond(avgRunTime) + " minutes");
-            $("#bestRunTime").html("Best 2 Mile Run Time: " + formatMathTimeToMinuteSecond(_.min(alanData.runs, function(run){return run.timeMathed;}).timeMathed) + " minutes")
-            $("#maxRunTime").html("Max 2 Mile Run Time: " + formatMathTimeToMinuteSecond(_.max(alanData.runs, function(run){return run.timeMathed;}).timeMathed) + " minutes")
-            $("#longestTimeBetweenRuns").html("Longest Time Between Runs: " + _.max(timeGaps).toFixed(2) + " Days");
-            $("#averageTimeBetweenRuns").html("Average Time Between Runs: " + (_.reduce(timeGaps, function(sum, gap){return sum+gap;},0)/timeGaps.length).toFixed(2) + " Days");
-            $("#time-since-last-run").html(getTimeSinceLastRun());
-
-
-            //draw both charts
-            
-        $('#run-goal').highcharts({
-            chart: {
-                type: 'bar'
+    $('#weights-and-runs').highcharts({
+        chart: {
+          type: 'scatter'
+        },
+        title: {
+          text: 'Weights and Runs'
+        },
+        xAxis: {
+          type: 'datetime',
+          dateTimeLabelFormats: {
+            day: '%e %b',
+            week: '%e %b',
+            month: '%b \'%y',
+            year: '%Y'
+          }
+        },
+        yAxis: [
+          
+          {
+            labels: {
+              formatter: function() {
+                return this.value +' Minutes';
+              },
+              style: {
+                color: '#AA4643'
+              }
             },
             title: {
-                text: ''
+              text: 'Run Times (minutes)'
             },
-            xAxis: {
-                min:0,
-                max:0,
-                labels:{
-                    enabled:false
-                }
-            },
-            yAxis: [{
-                min: 0,
-                max: 200,
-                title: {
-                    text: 'Total Miles',
-                }
-            },
-            {
-                title: {
-                    text: '',
-                },
-                labels: {
-                    enabled:false,
-                },
-                min: 0,
-                max: 200
-             }
-                   ],
-            plotOptions: {
-                bar: {
-                    dataLabels: {
-                        enabled: false,
-                    },
-                },
-            },
-            tooltip:{
-                enabled:false
-            },
-            legend: {
-                enabled: false
-            },
-            credits: {
-                enabled: false
-            },
-            series: [ 
-              {
-                name: 'Current Miles Run',
-                data: [parseFloat(getMilesRun())],
-                type: 'bar'
+            opposite: true
+          },
+          {
+            labels: {
+              formatter: function() {
+                return this.value +' lbs';
               },
-              {
-                name: 'Ideal Average Rate',
-                color: '#89A54E',
-                type: 'line',
-                yAxis: 1,
-                data: [[-1, parseFloat(getIdealMiles())],[1,parseFloat(getIdealMiles())]],
-              } 
-            ]
-        });
-
-        $('#weights-and-runs').highcharts({
-                chart: {
-                    type: 'scatter'
-                },
-                title: {
-                    text: 'Weights and Runs'
-                },
-                xAxis: {
-                    type: 'datetime',
-                    dateTimeLabelFormats: {
-                        day: '%e %b',
-                        week: '%e %b',
-                        month: '%b \'%y',
-                        year: '%Y'
-                    }
-                },
-                yAxis: [
-                    
-                    {
-                        labels: {
-                            formatter: function() {
-                                return this.value +' Minutes';
-                            },
-                            style: {
-                                color: '#AA4643'
-                            }
-                        },
-                        title: {
-                            text: 'Run Times (minutes)'
-                        },
-                        opposite: true
-                    },
-                    {
-                        labels: {
-                            formatter: function() {
-                                return this.value +' lbs';
-                            },
-                            style: {
-                                color: '#4572A7'
-                            }
-                        },
-                        title: {
-                            text: 'Weights',
-                            style: {
-                                color: '#4572A7'
-                            }
-                        }
-                        
-                    },
-                ], //
-                tooltip: {
-                    shared: false,
-                    formatter: function() {
-                        if(this.series.name == 'Run Times (2 miles)'){
-                            return '<b>'+ this.series.name +'</b><br/>'+
-                            Highcharts.dateFormat('%e %b %Y', this.x) +': '+ formatMathTimeToMinuteSecond(this.y) + " minutes"; 
-                        }
-                        else{
-                            return '<b>'+ this.series.name +'</b><br/>'+
-                            Highcharts.dateFormat('%e %b %Y', this.x) +': '+ this.y + " lbs";
-                        }
-                            
-                    }
-                },
-                
-                series: [
-                    {
-                    		type: 'scatter',
-                        name: 'Run Times (2 miles)',
-                        yAxis: 0,
-                        color: '#AA4643',
-                        data: alansRunData
-                    },
-                    {	
-                    		type: 'line',
-                        name: 'Run Regression',
-                        yAxis: 0,
-                        color: '#AA4643',
-                        data: alansRunRegression
-                    },
-                    {
-                    		type: 'scatter',
-                        name: 'Weight',
-                        yAxis: 1,
-                        color: '#4572A7',
-                        data: alanWeightData
-                    },
-                    {	
-                    		type: 'line',
-                        name: 'Weight Regression',
-                        yAxis: 1,
-                        color: '#4572A7',
-                        data: alanWeightRegression
-                    }
-                ]
-            });
-    });
-    
-    //returns a function that calcs the y given x
-    function leastSquaresLinearRegression(scatterArray){
+              style: {
+                color: '#4572A7'
+              }
+            },
+            title: {
+              text: 'Weights',
+              style: {
+                color: '#4572A7'
+              }
+            }
+            
+          },
+        ], //
+        tooltip: {
+          shared: false,
+          formatter: function() {
+            if(this.series.name == 'Run Times'){
+              return '<b>'+ this.series.name +'</b><br/>'+
+              Highcharts.dateFormat('%e %b %Y', this.x) +': '+ formatMathTimeToMinuteSecond(this.y) + " minutes"; 
+            }
+            else{
+              return '<b>'+ this.series.name +'</b><br/>'+
+              Highcharts.dateFormat('%e %b %Y', this.x) +': '+ this.y + " lbs";
+            }
+              
+          }
+        },
+        
+        series: [
+          {
+          		type: 'scatter',
+            name: 'Run Times',
+            yAxis: 0,
+            color: '#AA4643',
+            data: alansRunData
+          },
+          {	
+          		type: 'line',
+            name: 'Run Regression',
+            yAxis: 0,
+            color: '#AA4643',
+            data: alansRunRegression
+          },
+          {
+          		type: 'scatter',
+            name: 'Weight',
+            yAxis: 1,
+            color: '#4572A7',
+            data: alanWeightData
+          },
+          {	
+          		type: 'line',
+            name: 'Weight Regression',
+            yAxis: 1,
+            color: '#4572A7',
+            data: alanWeightRegression
+          }
+        ]
+      });
+  });
+  
+  //returns a function that calcs the y given x
+  function leastSquaresLinearRegression(scatterArray){
 	var meanX = 0,
-	    meanY = 0, 
-	    meanXY = 0, 
-	    meanXsquared = 0,
-	    slope = 0,
-	    interscept = 0;
+	  meanY = 0, 
+	  meanXY = 0, 
+	  meanXsquared = 0,
+	  slope = 0,
+	  interscept = 0;
 
 	for(var i = 0, points; points = scatterArray[i]; i++){
 		meanX += points[0];
@@ -410,9 +421,9 @@
 	return (function(x){return (slope * x) + interscept;});
 }
 
-            
-            
-        </script>
+      
+      
+    </script>
 
-    </body>
+  </body>
 </html>
