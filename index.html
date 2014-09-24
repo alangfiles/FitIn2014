@@ -151,7 +151,7 @@
       for(var i = 0, run; run = alanData.runsByDistance[i]; i++){
         for(var j = 0; j < run.milesRun; j++){
           var oneMileRun = {};
-          oneMileRun.date = run.date;
+          oneMileRun.date = run.date + (run.timeMathed/run.milesRun*60*1000);
           oneMileRun.timeMathed = run.timeMathed/run.milesRun;
           oneMileRun.note = run.note;
           oneMileAverages.push(oneMileRun);
