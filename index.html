@@ -153,7 +153,7 @@
           var oneMileRun = {};
           oneMileRun.date = run.date + (run.timeMathed/run.milesRun*60*1000);
           oneMileRun.timeMathed = run.timeMathed/run.milesRun;
-          oneMileRun.note = run.note;
+          oneMileRun.note = run.milesRun + " miles run";
           oneMileAverages.push(oneMileRun);
         }
       }
@@ -349,7 +349,7 @@
           formatter: function() {
             if(this.series.name == 'Run Times'){
               return '<b>'+ this.series.name +'</b><br/>'+
-              Highcharts.dateFormat('%e %b %Y', this.x) +': '+ formatMathTimeToMinuteSecond(this.y) + " minutes"; 
+              Highcharts.dateFormat('%e %b %Y', this.x) +': '+ formatMathTimeToMinuteSecond(this.y) + " minutes <br/>"+this.z; 
             }
             else{
               return '<b>'+ this.series.name +'</b><br/>'+
