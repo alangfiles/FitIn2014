@@ -587,7 +587,55 @@ var alanData = {
   "timeMathed":15.416666666666666,
   "date":1409996400000,
   "note":"with Ryan and Noah",
-  "milesRun":2}
+  "milesRun":2},
+{"timeFormatted":"31:31",
+  "timeMathed":31+31/60,
+  "date":1393433400000,
+  "note":"with Ryan McMullen, 4 miler",
+  "milesRun":4
+},
+{"timeFormatted":"30:43",
+  "timeMathed":30+43/60,
+  "date":1400140800000,
+  "milesRun":4
+},
+{"timeFormatted":"31:44",
+  "timeMathed":31+44/60,
+  "date":1401820200000,
+  "milesRun":4
+},
+{"timeFormatted":"33:52",
+  "timeMathed":33+52/60,
+  "date":1405715400000,
+  "note":"with noah",
+  "milesRun":4
+},
+{"timeFormatted":"31:41",
+  "timeMathed":31+41/60,
+  "date":1405962000000,
+  "milesRun":4
+},
+{"timeFormatted":"51:00",
+  "timeMathed":51,
+  "date":1408385760000,
+  "milesRun":6
+},
+{"timeFormatted":"33:55",
+  "timeMathed":33+55/60,
+  "date":1409084400000,
+  "milesRun":4
+},
+{"timeFormatted":"57:00",
+  "timeMathed":57,
+  "date":1409407200000,
+  "note":"6 mile, 90 degrees, with Henry Song",
+  "milesRun":6
+},
+{"timeFormatted":"32:12",
+  "timeMathed":32+12/60,
+  "date":1411500000000,
+  "milesRun":4
+}  
 		],
 	"weights": [
 	    /**{"pounds": 178.2, "Time": "", "date": "1/28/2013"},
