@@ -151,7 +151,7 @@
       for(var i = 0, run; run = alanData.runsByDistance[i]; i++){
         for(var j = 0; j < run.milesRun; j++){
           var oneMileRun = {};
-          oneMileRun.date = run.date + (run.timeMathed/run.milesRun*60*1000);
+          oneMileRun.date = run.date + (run.timeMathed/run.milesRun*60*1000)*j;
           oneMileRun.timeMathed = run.timeMathed/run.milesRun;
           oneMileRun.note = run.milesRun + " miles run";
           oneMileAverages.push(oneMileRun);
@@ -161,7 +161,8 @@
       var alansRunData = [];
         for(var i = 0, run; run = oneMileAverages[i]; i++)
         {
-          alansRunData.push({x: run.date, y: run.timeMathed, name: run.note});
+          alansRunData.push([run.date, run.timeMathed, run.note]);
+          //alansRunData.push({x: run.date, y: run.timeMathed, name: run.note});
         }
 
         var alanWeightData = [];
