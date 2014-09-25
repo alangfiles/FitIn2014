@@ -640,9 +640,9 @@ var alanData = {
   "timeMathed":32+12/60,
   "date":1411500000000,
   "milesRun":4
-} ,
-{"timeFormatted":"16:26",
-  "timeMathed":16+26/60,
+},
+{"timeFormatted":"15:26",
+  "timeMathed":15+26/60,
   "date": Date.UTC(2014,8,25,11,33),
   "milesRun":2
 }  
