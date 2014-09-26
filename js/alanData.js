@@ -645,6 +645,12 @@ var alanData = {
   "timeMathed":15+26/60,
   "date": Date.UTC(2014,8,25,11,33),
   "milesRun":2
+},
+{"timeFormatted":"16:19",
+  "timeMathed":16+19/60,
+  "date": Date.UTC(2014,8,25,20,33),
+  "milesRun":2,
+  "note":"with ryan and noah"
 }  
 		],
 	"weights": [
