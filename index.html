@@ -107,7 +107,7 @@
       }
       
       function getMilesRun(){
-        return alanData.runs.length * 2;
+        return oneMileAverages.length;
       }
       function getTimeSinceLastRun(){
         var lastRunDate = new Date(alanData.runs[alanData.runs.length-1].date);
@@ -197,11 +197,11 @@
       avgWeight = avgWeight/alanData.weights.length;
       
       var avgRunTime = 0;
-      for(var i =0, run; run = alanData.runs[i]; i++)
+      for(var i =0, run; run = oneMileAverages[i]; i++)
       {
         avgRunTime = avgRunTime + run.timeMathed;
       }
-      avgRunTime = avgRunTime/alanData.runs.length;
+      avgRunTime = avgRunTime/oneMileAverages.length;
       
       
       var idealRate = 200/52;
