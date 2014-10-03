@@ -651,7 +651,13 @@ var alanData = {
   "date": Date.UTC(2014,8,25,20,33),
   "milesRun":2,
   "note":"with ryan and noah"
-}  
+},
+{"timeFormatted":"33:41",
+  "timeMathed":33+41/60,
+  "date": Date.UTC(2014,9,2,17,33),
+  "milesRun":4,
+  "note":"with noah"
+}
 		],
 	"weights": [
 	    /**{"pounds": 178.2, "Time": "", "date": "1/28/2013"},
@@ -848,6 +854,8 @@ var alanData = {
 	    {"pounds": 175.0, "Time": "8:00 AM", "date": "9/23/2014"},
 	    {"pounds": 174.6, "Time": "8:00 AM", "date": "9/24/2014"},
 	    {"pounds": 175.6, "Time": "8:00 AM", "date": "9/26/2014"},
+	    {"pounds": 176.6, "Time": "8:00 AM", "date": "10/2/2014"},
+	    {"pounds": 179.4, "Time": "8:00 AM", "date": "10/3/2014"},
 	    // {"pounds": , "Time": "", "date": ""}
   ]
 }
