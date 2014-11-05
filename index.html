@@ -25,6 +25,7 @@
         <h3>The Good</h3>
         <div id="bestRunTime"></div>
         <div id="minWeight"></div>
+        <div id="shortestTimeBetweenRuns"></div>
       </div>
 
       <div id="the-bad" class="widget float-widget">
@@ -227,6 +228,7 @@
       $("#avgRunTime").html("Average Mile Run Time: " + formatMathTimeToMinuteSecond(avgRunTime) + " minutes");
       $("#bestRunTime").html("Best Mile Run Time: " + formatMathTimeToMinuteSecond(_.min(oneMileAverages, function(run){return run.timeMathed;}).timeMathed) + " minutes")
       $("#maxRunTime").html("Max Mile Run Time: " + formatMathTimeToMinuteSecond(_.max(oneMileAverages, function(run){return run.timeMathed;}).timeMathed) + " minutes")
+      $("#shortestTimeBetweenRuns").html("Shortest Time Between Runs: " + _.min(timeGaps).toFixed(2) + " Days");
       $("#longestTimeBetweenRuns").html("Longest Time Between Runs: " + _.max(timeGaps).toFixed(2) + " Days");
       $("#averageTimeBetweenRuns").html("Average Time Between Runs: " + (_.reduce(timeGaps, function(sum, gap){return sum+gap;},0)/timeGaps.length).toFixed(2) + " Days");
       $("#time-since-last-run").html(getTimeSinceLastRun());
