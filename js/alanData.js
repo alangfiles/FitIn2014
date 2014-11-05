@@ -118,7 +118,7 @@ var alanData = {
 },
 {"timeFormatted":"16:10",
   "timeMathed":16+10/60,
-  "date": Date.UTC(2014,10,5,16,30),
+  "date": Date.UTC(2014,10,4,16,30),
   "milesRun":2
 }
     ],
