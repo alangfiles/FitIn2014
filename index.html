@@ -61,71 +61,10 @@
     <script src="http://underscorejs.org/underscore-min.js"></script>
     
     <script>
-      function formatMathTimeToMinuteSecond(runTime)
-      {
-        return Math.floor(runTime) + ":" +  //minutes rounded
-            (((runTime%1)*60).toFixed(0) < 10  //seconds rounded.
-               ? "0"+((runTime%1)*60).toFixed(0) //add leading zero for seconds less than 10
-               : ((runTime%1)*60).toFixed(0));         
-      }
+            
+      var timeGaps = getTimeGaps(alanData.runs);
+      var oneMileAverages = getOneMileAverages(alanData.runsByDistance);
       
-      function getIdealMiles(){
-        var idealRate = 200/52;
-        var today = new Date();
-        return (idealRate*today.getWeek()).toFixed(3);
-      }
-      
-      function getMilesRun(){
-        return oneMileAverages.length;
-      }
-      function getTimeSinceLastRun(){
-        var lastRunDate = new Date(alanData.runs[alanData.runs.length-1].date);
-        var todaysDate = new Date();
-        var timeSpan = new Date(todaysDate - lastRunDate);
-        var retString = "";
-        if(timeSpan.getDate() > 1){ 
-          retString += timeSpan.getDate()-1;
-          retString += ":";
-        }
-        retString += (timeSpan.getHours().length < 2 
-          ? "0"+timeSpan.getHours().toString()
-          : timeSpan.getHours());
-        retString += ":";
-        retString += (timeSpan.getMinutes().length < 2 
-          ? "0"+timeSpan.getMinutes().toString()
-          : timeSpan.getMinutes());
-        retString += "";
-
-        return retString;
-      }
-      
-      Date.prototype.getWeek = function() {
-        var onejan = new Date(this.getFullYear(),0,1);
-        return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
-      }
-      
-      var timeGaps = [];
-      var runDataLength = alanData.runs.length;
-      
-      for(var i = 0; i < runDataLength; i++)
-      {
-        if(alanData.runs[i+1])
-        {
-          //awful math to turn milliseconds into days.
-          timeGaps.push((alanData.runs[i+1].date - alanData.runs[i].date)/1000/60/60/24);
-        }
-      }
-
-      var oneMileAverages = [];
-      for(var i = 0, run; run = alanData.runsByDistance[i]; i++){
-        for(var j = 0; j < run.milesRun; j++){
-          var oneMileRun = {};
-          oneMileRun.date = run.date + (run.timeMathed/run.milesRun*60*1000)*j;
-          oneMileRun.timeMathed = run.timeMathed/run.milesRun;
-          oneMileRun.note = run.milesRun + " miles run";
-          oneMileAverages.push(oneMileRun);
-        }
-      }
 
       var alansRunData = [];
         for(var i = 0, run; run = oneMileAverages[i]; i++)
@@ -178,6 +117,111 @@
       var idealMiles = parseFloat(getIdealMiles());
       var milesRun = getMilesRun();
       var currentRate = getMilesRun() / today.getWeek();
+
+
+
+      //returns a function that calcs the y given x
+    function leastSquaresLinearRegression(scatterArray){
+      var meanX = 0,
+        meanY = 0, 
+        meanXY = 0, 
+        meanXsquared = 0,
+        slope = 0,
+        interscept = 0;
+
+      for(var i = 0, points; points = scatterArray[i]; i++){
+        meanX += points[0];
+        meanY += points[1];
+        meanXY += points[0] * points[1];
+        meanXsquared += points[0]*points[0];
+      }
+
+      var arrayLength = scatterArray.length;
+
+      meanX = meanX/arrayLength;
+      meanY = meanY/arrayLength;
+      meanXY = meanXY/arrayLength;
+      meanXsquared = meanXsquared/arrayLength;
+
+      slope = (meanX * meanY - meanXY ) / ((meanX * meanX) - meanXsquared);
+      interscept = (meanY) - (slope * (meanX));
+
+      return (function(x){return (slope * x) + interscept;});
+    }
+
+      function formatMathTimeToMinuteSecond(runTime){
+        return Math.floor(runTime) + ":" +  //minutes rounded
+            (((runTime%1)*60).toFixed(0) < 10  //seconds rounded.
+               ? "0"+((runTime%1)*60).toFixed(0) //add leading zero for seconds less than 10
+               : ((runTime%1)*60).toFixed(0));         
+      }
+      
+      function getIdealMiles(){
+        var idealRate = 200/52;
+        var today = new Date();
+        return (idealRate*today.getWeek()).toFixed(3);
+      }
+      
+      function getMilesRun(){
+        return oneMileAverages.length;
+      }
+
+      function getTimeSinceLastRun(){
+        var lastRunDate = new Date(alanData.runs[alanData.runs.length-1].date);
+        var todaysDate = new Date();
+        var timeSpan = new Date(todaysDate - lastRunDate);
+        var retString = "";
+        if(timeSpan.getDate() > 1){ 
+          retString += timeSpan.getDate()-1;
+          retString += ":";
+        }
+        retString += (timeSpan.getHours().length < 2 
+          ? "0"+timeSpan.getHours().toString()
+          : timeSpan.getHours());
+        retString += ":";
+        retString += (timeSpan.getMinutes().length < 2 
+          ? "0"+timeSpan.getMinutes().toString()
+          : timeSpan.getMinutes());
+        retString += "";
+
+        return retString;
+      }
+
+      function getOneMileAverages(runData){
+        var retArray = [];
+        for(var i = 0, run; run = runData[i]; i++){
+          for(var j = 0; j < run.milesRun; j++){
+            var oneMileRun = {};
+            oneMileRun.date = run.date + (run.timeMathed/run.milesRun*60*1000)*j;
+            oneMileRun.timeMathed = run.timeMathed/run.milesRun;
+            oneMileRun.note = run.milesRun + " miles run";
+            retArray.push(oneMileRun);
+          }
+        }
+        return retArray;
+      }
+
+      function getTimeGaps(runData){
+        var retArray = [];
+        var runDataLength = runData.length;
+        var millisecondsToDays = 1000/60/60/24;
+        for(var i = 0; i < runDataLength; i++)
+        {
+          if(runData[i+1])
+          {
+            timeGaps.push((runData[i+1].date - runData[i].date)/millisecondsToDays);
+          }
+          else{ //the last entry, compare against today
+            timeGaps.push((new Date() - runData[i].date)/millisecondsToDays);
+          }
+        }
+        return retArray;
+      }
+
+      Date.prototype.getWeek = function() {
+        var onejan = new Date(this.getFullYear(),0,1);
+        return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
+      }
       
 
       $(document).ready(function(){
@@ -269,38 +313,7 @@
         ]
       });
   });
-  
-  //returns a function that calcs the y given x
-  function leastSquaresLinearRegression(scatterArray){
-  var meanX = 0,
-    meanY = 0, 
-    meanXY = 0, 
-    meanXsquared = 0,
-    slope = 0,
-    interscept = 0;
 
-  for(var i = 0, points; points = scatterArray[i]; i++){
-    meanX += points[0];
-    meanY += points[1];
-    meanXY += points[0] * points[1];
-    meanXsquared += points[0]*points[0];
-  }
-
-  var arrayLength = scatterArray.length;
-
-  meanX = meanX/arrayLength;
-  meanY = meanY/arrayLength;
-  meanXY = meanXY/arrayLength;
-  meanXsquared = meanXsquared/arrayLength;
-
-  slope = (meanX * meanY - meanXY ) / ((meanX * meanX) - meanXsquared);
-  interscept = (meanY) - (slope * (meanX));
-
-  return (function(x){return (slope * x) + interscept;});
-}
-
-      
-      
     </script>
 
   </body>
