@@ -208,15 +208,16 @@
       function getTimeGaps(runData){
         var retArray = [];
         var runDataLength = runData.length;
-        var millisecondsToDays = 1000/60/60/24;
         for(var i = 0; i < runDataLength; i++)
         {
           if(runData[i+1])
           {
-            retArray.push((runData[i+1].date - runData[i].date)/millisecondsToDays);
+            retArray.push((runData[i+1].date - runData[i].date)/1000/60/60/24);
           }
           else{ //the last entry, compare against today
-            retArray.push((new Date() - runData[i].date)/millisecondsToDays);
+            var d = new Date(); //currentDate
+            var utcDate = (Date.UTC(d.getFullYear(),d.getMonth(),d.getDay(),d.getHours(), d.getMinutes());
+            retArray.push(utcDate - runData[i].date)/1000/60/60/24);
           }
         }
         return retArray;
