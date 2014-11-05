@@ -171,7 +171,7 @@
       }
 
       function getTimeSinceLastRun(){
-        var lastRunDate = new Date(alanData.runs[alanData.runs.length-1].date);
+        var lastRunDate = new Date(alanData.runsByDistance[alanData.runsByDistance.length-1].date);
         var todaysDate = new Date();
         var timeSpan = new Date(todaysDate - lastRunDate);
         var retString = "";
