@@ -174,7 +174,8 @@
         var lastRunDate = new Date(alanData.runsByDistance[alanData.runsByDistance.length-1].date);
         var todaysDate = new Date();
 
-        var daysSinceLastRun = (todaysDate.getTime() - lastRunDate.getTime())/1000/60/60/24;
+        //does some magic to get today'sDate in GMT
+        var daysSinceLastRun = (todaysDate.getTime()-todaysDate.getTimezoneOffset()*60*1000 - lastRunDate.getTime())/1000/60/60/24;
         var retString =  daysSinceLastRun.toFixed(2) + " Days";
 
         return retString;
