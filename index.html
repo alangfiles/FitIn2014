@@ -216,8 +216,8 @@
           }
           else{ //the last entry, compare against today
             var d = new Date(); //currentDate
-            var utcDate = (Date.UTC(d.getFullYear(),d.getMonth(),d.getDay(),d.getHours(), d.getMinutes());
-            retArray.push(utcDate - runData[i].date)/1000/60/60/24);
+            var utcDate = Date.UTC(d.getFullYear(),d.getMonth(),d.getDay(),d.getHours(), d.getMinutes());
+            retArray.push((utcDate - runData[i].date)/1000/60/60/24);
           }
         }
         return retArray;
