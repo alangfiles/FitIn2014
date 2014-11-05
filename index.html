@@ -14,9 +14,11 @@
   <body>
     
     <div id="wrapper">
+
       <h1>Fit in 2014!</h1>
-      <div id="weights-and-runs" class="widget"></div>
-      
+
+      <div id="weights-and-runs" class="widget"></div>      
+
       <div id="run-goal" class="widget float-widget"></div>
       
       <div id="the-good" class="widget float-widget">
@@ -49,7 +51,6 @@
         <div id="time-since-last-run"></div>
       </div>
 
-      
     </div>
     
     <script src="js/vendor/jquery-1.10.2.min.js"></script>
@@ -183,8 +184,7 @@
         //when doc is ready, draw data into 2-mile-runs chart
 
         
-      $("#miles-rate").html("Current Rate: " + currentRate.toFixed(3) + " Miles Per Week<br/>"
-                + "Ideal Rate: " + idealRate.toFixed(3) + " Miles Per Week");    
+      $("#miles-rate").html("Current Rate: " + currentRate.toFixed(3) + " Miles Per Week<br/>" + "Ideal Rate: " + idealRate.toFixed(3) + " Miles Per Week");    
       
       $("#minWeight").html("Min Weight: " + _.min(alanData.weights, function(weight){return weight.pounds;}).pounds);
       $("#maxWeight").html("Max Weight: " + _.max(alanData.weights, function(weight){return weight.pounds;}).pounds);
@@ -262,34 +262,10 @@
         },
         
         series: [
-          {
-            type: 'scatter',
-            name: 'Run Times',
-            yAxis: 0,
-            color: '#AA4643',
-            data: alansRunData
-          },
-          { 
-            type: 'line',
-            name: 'Run Regression',
-            yAxis: 0,
-            color: '#AA4643',
-            data: alansRunRegression
-          },
-          {
-            type: 'scatter',
-            name: 'Weight',
-            yAxis: 1,
-            color: '#4572A7',
-            data: alanWeightData
-          },
-          { 
-            type: 'line',
-            name: 'Weight Regression',
-            yAxis: 1,
-            color: '#4572A7',
-            data: alanWeightRegression
-          }
+          {name: 'Run Times', type: 'scatter',yAxis: 0,color: '#AA4643',data: alansRunData},
+          {name: 'Run Regression', type: 'line',yAxis: 0,color: '#AA4643',data: alansRunRegression},
+          {name: 'Weight', type: 'scatter',yAxis: 1,color: '#4572A7',data: alanWeightData},
+          {name: 'Weight Regression', type: 'line',yAxis: 1,color: '#4572A7',data: alanWeightRegression}
         ]
       });
   });
