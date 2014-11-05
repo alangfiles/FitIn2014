@@ -1,0 +1,31 @@
+#run-goal{
+      width:300px;
+      height:180px;
+    }
+    #weights-and-runs{
+      height:400px;
+    }
+    #wrapper{
+      width:800;
+      margin: 0 auto;
+    }
+    #wrapper h1{
+      text-align:center;
+    }
+    .widget{
+      background-color: #EEE;
+      border: 1px solid #CCC;
+      border-radius: 5px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      padding:10px;
+      margin:10px;
+    }
+    .float-widget{
+      float:left;
+    }
+    .widget h3{
+      text-align:center;
+      margin:0;
+      margin-bottom:5px;
+    }
