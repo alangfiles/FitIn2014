@@ -61,6 +61,10 @@
     <script src="http://underscorejs.org/underscore-min.js"></script>
     
     <script>
+      Date.prototype.getWeek = function() {
+        var onejan = new Date(this.getFullYear(),0,1);
+        return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
+      }
             
       var timeGaps = getTimeGaps(alanData.runs);
       var oneMileAverages = getOneMileAverages(alanData.runsByDistance);
@@ -218,10 +222,7 @@
         return retArray;
       }
 
-      Date.prototype.getWeek = function() {
-        var onejan = new Date(this.getFullYear(),0,1);
-        return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
-      }
+      
       
 
       $(document).ready(function(){
