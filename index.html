@@ -209,10 +209,10 @@
         {
           if(runData[i+1])
           {
-            timeGaps.push((runData[i+1].date - runData[i].date)/millisecondsToDays);
+            retArray.push((runData[i+1].date - runData[i].date)/millisecondsToDays);
           }
           else{ //the last entry, compare against today
-            timeGaps.push((new Date() - runData[i].date)/millisecondsToDays);
+            retArray.push((new Date() - runData[i].date)/millisecondsToDays);
           }
         }
         return retArray;
