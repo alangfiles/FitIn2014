@@ -66,7 +66,7 @@
         return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
       }
             
-      var timeGaps = getTimeGaps(alanData.runs);
+      var timeGaps = getTimeGaps(alanData.runsByDistance);
       var oneMileAverages = getOneMileAverages(alanData.runsByDistance);
       
 
