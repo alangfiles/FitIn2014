@@ -173,20 +173,9 @@
       function getTimeSinceLastRun(){
         var lastRunDate = new Date(alanData.runsByDistance[alanData.runsByDistance.length-1].date);
         var todaysDate = new Date();
-        var timeSpan = new Date(todaysDate - lastRunDate);
-        var retString = "";
-        if(timeSpan.getDate() > 1){ 
-          retString += timeSpan.getDate()-1;
-          retString += ":";
-        }
-        retString += (timeSpan.getHours().length < 2 
-          ? "0"+timeSpan.getHours().toString()
-          : timeSpan.getHours());
-        retString += ":";
-        retString += (timeSpan.getMinutes().length < 2 
-          ? "0"+timeSpan.getMinutes().toString()
-          : timeSpan.getMinutes());
-        retString += "";
+
+        var daysSinceLastRun = (todaysDate.getTime() - lastRunDate.getTime())/1000/60/60/24;
+        var retString =  daysSinceLastRun.toFixed(2) + " Days";
 
         return retString;
       }
@@ -215,8 +204,7 @@
             retArray.push((runData[i+1].date - runData[i].date)/1000/60/60/24);
           }
           else{ //the last entry, compare against today
-            var d = new Date(); //currentDate
-            var utcDate = Date.UTC(d.getFullYear(),d.getMonth(),d.getDay(),d.getHours(), d.getMinutes());
+            var utcDate = new Date().getTime(); //currentDate
             retArray.push((utcDate - runData[i].date)/1000/60/60/24);
           }
         }
