@@ -135,6 +135,11 @@ var alanData = {
   "timeMathed":23+58/60,
   "date": Date.UTC(2014,10,14,17,20),
   "milesRun":3
+},
+{"timeFormatted":"23:08",
+  "timeMathed":23+08/60,
+  "date": Date.UTC(2014,10,16,12,00),
+  "milesRun":3
 }
     ],
   "weights": [
@@ -352,6 +357,7 @@ var alanData = {
       {"pounds": 180.0, "Time": "8:00 AM", "date": "11/12/2014"},
       {"pounds": 181.2, "Time": "8:00 AM", "date": "11/13/2014"},
       {"pounds": 179.8, "Time": "8:00 AM", "date": "11/14/2014"},
+      {"pounds": 180.4, "Time": "8:00 AM", "date": "11/16/2014"},
       // {"pounds": , "Time": "", "date": ""}
   ]
 }
