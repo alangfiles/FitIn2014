@@ -152,6 +152,12 @@ var alanData = {
   "date": Date.UTC(2014,10,24,17,30),
   "milesRun":4,
   "note": "with Preston, in Frisco"
+},
+{"timeFormatted":"31:08",
+  "timeMathed":31+08/60,
+  "date": Date.UTC(2014,10,27,17,30),
+  "milesRun":4,
+  "note": "in Frisco"
 }
     ],
   "weights": [
