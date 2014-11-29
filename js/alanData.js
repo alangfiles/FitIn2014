@@ -158,6 +158,12 @@ var alanData = {
   "date": Date.UTC(2014,10,27,17,30),
   "milesRun":4,
   "note": "in Frisco"
+},
+{"timeFormatted":"23:40",
+  "timeMathed":23+40/60,
+  "date": Date.UTC(2014,10,28,15,30),
+  "milesRun":3,
+  "note": "in Frisco"
 }
     ],
   "weights": [
