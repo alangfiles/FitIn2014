@@ -98,25 +98,6 @@
       alanWeightRegression.push([alanWeightData[0][0], weightRegressionFunction(alanWeightData[0][0])]);
       alanWeightRegression.push([alanWeightData[alanWeightData.length-1][0], weightRegressionFunction(alanWeightData[alanWeightData.length-1][0])]);
 
-        $("#miles-run").html("Current Miles: " + getMilesRun() + " Miles Run<br/>"
-                  +"Ideal Miles: " + getIdealMiles() + " Miles Run");    
-      
-
-      var avgWeight = 0;
-      for(var i =0, lb; lb = alanData.weights[i]; i++)
-      {
-        avgWeight = avgWeight + lb.pounds;
-      }
-      avgWeight = avgWeight/alanData.weights.length;
-      
-      var avgRunTime = 0;
-      for(var i =0, run; run = oneMileAverages[i]; i++)
-      {
-        avgRunTime = avgRunTime + run.timeMathed;
-      }
-      avgRunTime = avgRunTime/oneMileAverages.length;
-      
-      
       var idealRate = 200/52;
       var today = new Date();
       var idealMiles = parseFloat(getIdealMiles());
@@ -224,15 +205,18 @@
       
       $("#minWeight").html("Min Weight: " + _.min(alanData.weights, function(weight){return weight.pounds;}).pounds);
       $("#maxWeight").html("Max Weight: " + _.max(alanData.weights, function(weight){return weight.pounds;}).pounds);
-      $("#avgWeight").html("Average Weight: " + avgWeight.toFixed(2) + " lbs");
-      $("#avgRunTime").html("Average Mile Run Time: " + formatMathTimeToMinuteSecond(avgRunTime) + " minutes");
+      $("#avgWeight").html("Average Weight: " + (_.reduce(alanData.weights, function(sum, weight){sum + weight.pounds},0)/alanData.weights.length).toFixed(2) + " lbs"; 
+      
+      $("#avgRunTime").html("Average Mile Run Time: " + formatMathTimeToMinuteSecond(_.reduce(oneMileAverages, function(sum, run){sum + run.timeMathed},0)/oneMileAverages.length) + " minutes");
       $("#bestRunTime").html("Best Mile Run Time: " + formatMathTimeToMinuteSecond(_.min(oneMileAverages, function(run){return run.timeMathed;}).timeMathed) + " minutes")
       $("#maxRunTime").html("Max Mile Run Time: " + formatMathTimeToMinuteSecond(_.max(oneMileAverages, function(run){return run.timeMathed;}).timeMathed) + " minutes")
+      
       $("#shortestTimeBetweenRuns").html("Shortest Time Between Runs: " + _.min(timeGaps).toFixed(2) + " Days");
       $("#longestTimeBetweenRuns").html("Longest Time Between Runs: " + _.max(timeGaps).toFixed(2) + " Days");
       $("#averageTimeBetweenRuns").html("Average Time Between Runs: " + (_.reduce(timeGaps, function(sum, gap){return sum+gap;},0)/timeGaps.length).toFixed(2) + " Days");
       $("#time-since-last-run").html(getTimeSinceLastRun());
-
+      
+      $("#miles-run").html("Current Miles: " + getMilesRun() + " Miles Run<br/>"+"Ideal Miles: " + getIdealMiles() + " Miles Run");   
 
       //draw both charts
       
