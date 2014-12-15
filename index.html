@@ -205,9 +205,9 @@
       
       $("#minWeight").html("Min Weight: " + _.min(alanData.weights, function(weight){return weight.pounds;}).pounds);
       $("#maxWeight").html("Max Weight: " + _.max(alanData.weights, function(weight){return weight.pounds;}).pounds);
-      $("#avgWeight").html("Average Weight: " + (_.reduce(alanData.weights, function(sum, weight){sum + weight.pounds},0)/alanData.weights.length).toFixed(2) + " lbs"); 
+      $("#avgWeight").html("Average Weight: " + (_.reduce(alanData.weights, function(sum, weight){return sum + weight.pounds},0)/alanData.weights.length).toFixed(2) + " lbs"); 
       
-      $("#avgRunTime").html("Average Mile Run Time: " + formatMathTimeToMinuteSecond(_.reduce(oneMileAverages, function(sum, run){sum + run.timeMathed},0)/oneMileAverages.length) + " minutes");
+      $("#avgRunTime").html("Average Mile Run Time: " + formatMathTimeToMinuteSecond(_.reduce(oneMileAverages, function(sum, run){return sum + run.timeMathed},0)/oneMileAverages.length) + " minutes");
       $("#bestRunTime").html("Best Mile Run Time: " + formatMathTimeToMinuteSecond(_.min(oneMileAverages, function(run){return run.timeMathed;}).timeMathed) + " minutes")
       $("#maxRunTime").html("Max Mile Run Time: " + formatMathTimeToMinuteSecond(_.max(oneMileAverages, function(run){return run.timeMathed;}).timeMathed) + " minutes")
       
