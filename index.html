@@ -17,7 +17,9 @@
 
       <h1>Fit in 2014!</h1>
 
-      <div id="weights-and-runs" class="widget"></div>      
+      <!-- <div id="weights-and-runs" class="widget"></div>     -->
+      <div id="weights" class="small-widget"></div>
+      <div id="runs" class="small-widget"></div>
 
       <div id="run-goal" class="widget float-widget"></div>
       
@@ -252,41 +254,48 @@
       ]
     });
 
-    $('#weights-and-runs').highcharts({
+    $('#weights').highcharts({
         chart: {type: 'scatter'},
-        title: {text: 'Weights and Runs'},
+        title: {text: 'Weights'},
         xAxis: {type: 'datetime',dateTimeLabelFormats: {day: '%e %b',week: '%e %b',month: '%b \'%y',year: '%Y'}},
-        yAxis: [
-          {
-            title: {text: 'Run Times (minutes)'},
-            labels: {formatter: function() {return this.value +' Minutes';},style: {color: '#AA4643'}},
-            opposite: true
-          },
+        yAxis: 
           {
             title: {text: 'Weights',style: {color: '#4572A7'}},
             labels: {formatter: function() {return this.value +' lbs';},style: {color: '#4572A7'}}
           },
-        ],
         tooltip: {
-          shared: false,
           formatter: function() {
-            if(this.series.name == 'Run Times'){
-                console.log(this);
-              return '<b>'+ this.series.name +'</b><br/>'+
-              Highcharts.dateFormat('%e %b %Y', this.x) +': '+ formatMathTimeToMinuteSecond(this.y) + " minutes <br/>"+this.name; 
-            }
-            else{
-              return '<b>'+ this.series.name +'</b><br/>'+
+            return '<b>'+ this.series.name +'</b><br/>'+
               Highcharts.dateFormat('%e %b %Y', this.x) +': '+ this.y + " lbs";
-            }
+          }
+        },
+        
+        series: [
+          {name: 'Weight', type: 'scatter',yAxis: 1,color: '#4572A7',data: alanWeightData},
+          {name: 'Weight Regression', type: 'line',yAxis: 1,color: '#4572A7',data: alanWeightRegression}
+        ]
+      });
+  });
+
+$('#runs').highcharts({
+        chart: {type: 'scatter'},
+        title: {text: 'Runs'},
+        xAxis: {type: 'datetime',dateTimeLabelFormats: {day: '%e %b',week: '%e %b',month: '%b \'%y',year: '%Y'}},
+        yAxis: 
+          {
+            title: {text: 'Run Times (minutes)'},
+            labels: {formatter: function() {return this.value +' Minutes';},style: {color: '#AA4643'}},
+          },
+        tooltip: {
+          formatter: function() {
+            return '<b>'+ this.series.name +'</b><br/>'+
+              Highcharts.dateFormat('%e %b %Y', this.x) +': '+ formatMathTimeToMinuteSecond(this.y) + " minutes <br/>"+this.name; 
           }
         },
         
         series: [
           {name: 'Run Times', type: 'scatter',yAxis: 0,color: '#AA4643',data: alansRunData},
           {name: 'Run Regression', type: 'line',yAxis: 0,color: '#AA4643',data: alansRunRegression},
-          {name: 'Weight', type: 'scatter',yAxis: 1,color: '#4572A7',data: alanWeightData},
-          {name: 'Weight Regression', type: 'line',yAxis: 1,color: '#4572A7',data: alanWeightRegression}
         ]
       });
   });
