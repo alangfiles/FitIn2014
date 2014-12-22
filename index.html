@@ -21,7 +21,7 @@
       <div id="weights" class="widget small-widget float-widget"></div>
       <div id="runs" class="widget small-widget float-widget"></div>
 
-      <div id="run-goal" class="widget float-widget"></div>
+      <div id="monthly-miles" class="widget float-widget"></div>
       
       <div id="the-good" class="widget float-widget">
         <h3>The Good</h3>
@@ -90,6 +90,7 @@
       var alanWeightRegression = [];
       var runRegressionFunction = leastSquaresLinearRegression(alansRunData);
       var weightRegressionFunction = leastSquaresLinearRegression(alanWeightData);
+      var milesPerMonth = getMilesPerMonth(alansRunData);
 
       //for the run regression, just push the first and last points.
       alansRunRegression.push([alansRunData[0][0], runRegressionFunction(alansRunData[0][0])]);
@@ -107,6 +108,12 @@
       var currentRate = getMilesRun() / today.getWeek();
 
 
+      function getMilesPerMonth(){
+       return _.chain(alansRunData)
+         .countBy(function(data, key){ return new Date(data[0]).getMonth()})
+         .toArray()
+         .value();
+      }
 
       //returns a function that calcs the y given x
     function leastSquaresLinearRegression(scatterArray){
@@ -221,38 +228,6 @@
       $("#miles-run").html("Current Miles: " + getMilesRun() + " Miles Run<br/>"+"Ideal Miles: " + getIdealMiles() + " Miles Run");   
 
       //draw both charts
-      
-    $('#run-goal').highcharts({
-      chart: {type: 'bar'},
-      title: {text: ''},
-      xAxis: {min:0,max:0,labels:{enabled:false}},
-      yAxis: [
-        {min: 0,max: 200,title: {text: 'Total Miles'}},
-        {min: 0,max: 200,title: {text: ''},labels: {enabled:false}}
-      ],
-      plotOptions: {bar: {dataLabels: {enabled: false}}},
-      tooltip:{enabled:false},
-      legend: {enabled: false},
-      credits: {enabled: false},
-      series: [ 
-        {
-          name: 'Current Miles Run',
-          data: [parseFloat(getMilesRun())],
-          type: 'bar'
-        },
-        {
-          name: 'Ideal Average Rate',
-          color: '#89A54E',
-          type: 'line',
-          yAxis: 1,
-          data: 
-            [
-              [-1, idealMiles],
-              [1, idealMiles]
-            ],
-        } 
-      ]
-    });
 
     $('#weights').highcharts({
         chart: {type: 'scatter'},
@@ -298,6 +273,24 @@ $('#runs').highcharts({
         ]
       });
   });
+
+$('#monthly-miles').highcharts({
+        chart: {type: 'bar'},
+        title: {text: 'Miles per Month'},
+        xAxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']},
+        yAxis: {title: {text: 'Miles Run'}},
+        tooltip: {
+          formatter: function() {
+            return '<b>'+ this.x +'</b><br/>: '+ this.y + " Miles <br/>"+this.name; 
+          }
+        },
+        
+        series: [
+          {name: 'Miles per Month',data: milesPerMonth},
+        ]
+      });
+  });
+
 
     </script>
 
