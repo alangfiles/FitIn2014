@@ -44,7 +44,7 @@
         <div id="averageTimeBetweenRuns"></div>
       </div>
 
-      <div id="text-stats" class="widget float-widget">
+      <!-- <div id="text-stats" class="widget float-widget">
         <div id="miles-run"></div>
         <div id="miles-rate"></div>
       </div>
@@ -53,7 +53,7 @@
         <h3>Time Since Last Run</h3>
         <div id="time-since-last-run"></div>
       </div>
-
+ -->
     </div>
     
     <script src="js/vendor/jquery-1.10.2.min.js"></script>
@@ -209,8 +209,6 @@
       $(document).ready(function(){
         //when doc is ready, draw data into 2-mile-runs chart
 
-        
-      $("#miles-rate").html("Current Rate: " + currentRate.toFixed(3) + " Miles Per Week<br/>" + "Ideal Rate: " + idealRate.toFixed(3) + " Miles Per Week");    
       
       $("#minWeight").html("Min Weight: " + _.min(alanData.weights, function(weight){return weight.pounds;}).pounds);
       $("#maxWeight").html("Max Weight: " + _.max(alanData.weights, function(weight){return weight.pounds;}).pounds);
@@ -223,9 +221,10 @@
       $("#shortestTimeBetweenRuns").html("Shortest Time Between Runs: " + _.min(timeGaps).toFixed(2) + " Days");
       $("#longestTimeBetweenRuns").html("Longest Time Between Runs: " + _.max(timeGaps).toFixed(2) + " Days");
       $("#averageTimeBetweenRuns").html("Average Time Between Runs: " + (_.reduce(timeGaps, function(sum, gap){return sum+gap;},0)/timeGaps.length).toFixed(2) + " Days");
-      $("#time-since-last-run").html(getTimeSinceLastRun());
       
-      $("#miles-run").html("Current Miles: " + getMilesRun() + " Miles Run<br/>"+"Ideal Miles: " + getIdealMiles() + " Miles Run");   
+      // $("#miles-rate").html("Current Rate: " + currentRate.toFixed(3) + " Miles Per Week<br/>" + "Ideal Rate: " + idealRate.toFixed(3) + " Miles Per Week");    
+      // $("#time-since-last-run").html(getTimeSinceLastRun());
+      // $("#miles-run").html("Current Miles: " + getMilesRun() + " Miles Run<br/>"+"Ideal Miles: " + getIdealMiles() + " Miles Run");   
 
       //draw both charts
 
