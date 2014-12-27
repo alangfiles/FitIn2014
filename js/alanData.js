@@ -184,6 +184,11 @@ var alanData = {
   "timeMathed":23+38/60,
   "date": Date.UTC(2014,11,23,15,00),
   "milesRun":3
+},
+{"timeFormatted":"15:13",
+  "timeMathed":15+13/60,
+  "date": Date.UTC(2014,11,27,12,30),
+  "milesRun":2
 }
     ],
   "weights": [
