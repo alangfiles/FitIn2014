@@ -9,6 +9,10 @@
       width:450px;
       height:300px;
     }
+    .wide-widget{
+      width:550px;
+      height:300px;
+    }
     #wrapper{
       width:800;
       margin: 0 auto;
