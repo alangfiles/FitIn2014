@@ -89,6 +89,7 @@
       var alansRunRegression = [];
       var alanWeightRegression = [];
       var runRegressionFunction = leastSquaresLinearRegression(alansRunData);
+      var weightEveryDay = getAWeightEveryDay(alanWeightData);
       var weightRegressionFunction = leastSquaresLinearRegression(alanWeightData);
       var milesPerMonth = getMilesPerMonth(alansRunData);
 
@@ -107,6 +108,14 @@
       var milesRun = getMilesRun();
       var currentRate = getMilesRun() / today.getWeek();
 
+
+      function getAWeightEveryDay(weightArrayWithGaps){
+        //the weight array has time gaps, so let's assume a value for each point in it for each day.
+        var weightsByDay = _.chain(weightArrayWithGaps)
+                            .groupBy(function(data,key){ return new Date(data[0]).getDay()})
+                            .toArray().value();
+
+      }
 
       function getMilesPerMonth(){
        return _.chain(alansRunData)
@@ -240,7 +249,7 @@
         tooltip: {
           formatter: function() {
             return '<b>'+ this.series.name +'</b><br/>'+
-              Highcharts.dateFormat('%e %b %Y', this.x) +': '+ this.y + " lbs";
+              Highcharts.dateFormat('%e %b %Y', this.x) +': '+ Highcharts.numberFormat(this.y,1) + " lbs";
           }
         },
         
