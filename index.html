@@ -66,22 +66,38 @@
     
     <script>
 
-      // //let's get some matrices in there
-      // var y = math.matrix(_.chain(alanWeightData)
-      //                       .map(function(x){return x[1];})
-      //                       .toArray()
-      //                       .value());
-      // var x_array = _.chain(alanWeightData)
-      //                .toArray()
-      //                .value();
-      // var x = math.matrix(_.chain(alanWeightData)
-      //                      .map(function(x){return [1, x[0],x[0]*x[0]] ;})
-      //                      .toArray()
-      //                      .value());
-      // var x_transpose = math.inv(x);
 
-      // //var bHat = (x'x)^-1x'y
-      // var bHat = math.multiply(math.multiply(math.inv(math.multiply(x_transpose,x)),x_transpose), y);
+      function weightPolynomialRegression(polyData){
+        // returns an array
+        // let's get some matrices in there
+        var y = math.matrix(_.chain(alanWeightData)
+                              .map(function(x){return x[1];})
+                              .toArray()
+                              .value());
+        var x = math.matrix(_.chain(alanWeightData)
+                             .map(function(x){return [1, x[0],x[0]*x[0]] ;})
+                             .toArray()
+                             .value());
+        var x_transpose = math.transpose(x);
+        //var bHat = (x'x)^-1x'y
+        var bHat = math.multiply(math.multiply(math.inv(math.multiply(x_transpose,x)),x_transpose), y);
+
+        //for each day in the year
+        var startOfYear = Date.UTC(2014,0,1);
+        var endOfYear = Date.UTC(2014,11,31);
+        var millisecondsInADay = 86400000;
+        var returnArray;
+
+        for(var day = startOfYear; day < endOfYear; day += millisecondsInADay){
+          var y = bHat[0] + bHat[1]*day + bHat[2]*day*day;
+          returnArray.push([day,y]);
+        }
+
+        return returnArray;
+
+      }
+
+
 
       Date.prototype.getWeek = function() {
         var onejan = new Date(this.getFullYear(),0,1);
@@ -274,9 +290,11 @@
         
         series: [
           {name: 'Weight', type: 'scatter',color: '#4572A7',data: alanWeightData},
-          {name: 'Weight Regression', type: 'line',color: '#4572A7',data: alanWeightRegression}
+          {name: 'Weight Linear Regression', type: 'line',color: '#4572A7',data: alanWeightRegression},
+          // {name: 'Weight Poly Regression', type: 'spline',color: '#4572A7',data: alanWeightRegression}
         ]
       });
+
 
 $('#runs').highcharts({
         chart: {type: 'scatter'},
