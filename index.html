@@ -70,14 +70,14 @@
       var y = math.matrix(_.chain(alanWeightData)
                             .map(function(x){return x[1];})
                             .toArray()
-                            .value(););
+                            .value());
       var x_array = _.chain(alanWeightData)
                      .toArray()
                      .value();
       var x = math.matrix(_.chain(alanWeightData)
                            .map(function(x){return [1, x[0],x[0]*x[0]] ;})
                            .toArray()
-                           .value(););
+                           .value());
       var x_transpose = math.inv(x);
 
       //var bHat = (x'x)^-1x'y
