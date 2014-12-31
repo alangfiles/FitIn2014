@@ -62,8 +62,27 @@
     <script src="js/main.js"></script>
     <script src="js/alanData.js"></script>
     <script src="http://underscorejs.org/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/1.2.0/math.min.js"></script>
     
     <script>
+
+      //let's get some matrices in there
+      var y = math.matrix(_.chain(alanWeightData)
+                            .map(function(x){return x[1];})
+                            .toArray()
+                            .value(););
+      var x_array = _.chain(alanWeightData)
+                     .toArray()
+                     .value();
+      var x = math.matrix(_.chain(alanWeightData)
+                           .map(function(x){return [1, x[0],x[0]*x[0]] ;})
+                           .toArray()
+                           .value(););
+      var x_transpose = math.inv(x);
+
+      //var bHat = (x'x)^-1x'y
+      var bHat = math.multiply(math.multiply(math.inv(math.multiply(x_transpose,x)),x_transpose), y);
+
       Date.prototype.getWeek = function() {
         var onejan = new Date(this.getFullYear(),0,1);
         return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
