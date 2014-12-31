@@ -86,7 +86,7 @@
         var startOfYear = Date.UTC(2014,0,1);
         var endOfYear = Date.UTC(2014,11,31);
         var millisecondsInADay = 86400000;
-        var returnArray;
+        var returnArray = [];
 
         for(var day = startOfYear; day < endOfYear; day += millisecondsInADay){
           var y = bHat[0] + bHat[1]*day + bHat[2]*day*day;
